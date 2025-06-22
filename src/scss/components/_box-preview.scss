@@ -1,0 +1,24 @@
+.box-preview {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+
+  padding: 3rem;
+  height: 50rem;
+  width: 50rem;
+
+  border: 1px solid black;
+
+  &__title {
+    font-size: 2rem;
+    font-weight: bold;
+
+    border-bottom: 1px solid black;
+  }
+
+  &__content {
+    width: 100%;
+  }
+}

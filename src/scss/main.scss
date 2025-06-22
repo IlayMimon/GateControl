@@ -10,7 +10,11 @@
 @use "./pages/home-page";
 
 // Components
+@use "./components/home-page-body";
 @use "./components/location-item";
 @use "./components/location-selector";
+@use "./components/main-content";
+@use "./components/box-preview";
 @use "./components/kpi";
 @use "./components/kpies";
+@use "./components/person-item";
