@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-const buildAssetsPath = 'sites/MarpeArava/MarpeApp/assets';
+const buildAssetsPath = 'sites/PDM_Entry/PDM_Entry_App/assets';
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -13,7 +13,7 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/_api': 'http://localhost:3000/sites/MarpeArava',
+      '/_api': 'http://localhost:3000/sites/PDM_Entry',
       '^/sites/[^/]+/_api': 'http://localhost:3000',
     },
   },
