@@ -1,0 +1,113 @@
+$color-text-dark: #595959;
+
+.driver-filter-button {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 1rem;
+
+  width: 100%;
+
+  transition: all 0.2s ease;
+  border: var(--Border-secondary);
+  cursor: pointer;
+
+  &:first-child {
+    border-left: none;
+    border-right: none;
+  }
+
+  &:last-child {
+    border-left: none;
+    border-right: none;
+  }
+
+  &:hover {
+    background-color: var(--Background-color-bg-text-hover);
+  }
+
+  &--active {
+    background-color: var(--Background-color-bg-text-active);
+    &:hover {
+      background-color: var(--Background-color-bg-text-active);
+    }
+  }
+
+  &__button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 8.8rem;
+    height: 2.4rem;
+    padding: 0.2rem 0.75rem;
+
+    background-color: white;
+    color: var(--Primary-color-primary);
+    font-size: 1.4rem;
+    box-shadow: 0 0 0 0.05rem rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+
+    &__text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    &__dropdown-icon {
+      margin-right: 0.25rem;
+      width: 2rem;
+      height: 100%;
+    }
+
+    &--purple {
+      border: solid 1px var(--Colors-purple-3);
+
+      &:hover {
+        background-color: var(--Colors-purple-3);
+      }
+    }
+
+    &--cyan {
+      border: solid 1px var(--Colors-cyan-3);
+      &:hover {
+        background-color: var(--Colors-cyan-3);
+      }
+    }
+
+    &--orange {
+      border: solid 1px var(--Colors-orange-3);
+      &:hover {
+        background-color: var(--Colors-orange-3);
+      }
+    }
+
+    &--active {
+      color: rgba(0, 0, 0, 0.88);
+      border: none;
+
+      &--purple {
+        background-color: var(--Colors-purple-3);
+      }
+
+      &--cyan {
+        background-color: var(--Colors-cyan-3);
+      }
+
+      &--orange {
+        background-color: var(--Colors-orange-3);
+      }
+    }
+  }
+
+  &__kilometers {
+    font-size: 1.2rem;
+    margin-top: 1.25rem;
+    color: $color-text-dark;
+  }
+}

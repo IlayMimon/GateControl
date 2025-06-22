@@ -1,0 +1,89 @@
+.driver-organization-card {
+  width: -webkit-fill-available;
+  width: -moz-available; // not needed if not using Firefox.
+
+  background: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+
+  &__scroll {
+    background: #f5f5f5;
+
+    height: 80vh;
+
+    border-radius: 0 0 8px 8px;
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+      width: 2.8rem;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--Fill-color-fill, rgba(0, 0, 0, 0.15));
+      border: 1rem solid transparent;
+      border-radius: 20px;
+      background-clip: content-box;
+    }
+
+    &__container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+
+      padding: 3.2rem;
+      gap: 2.4rem;
+
+      background: #f5f5f5;
+    }
+  }
+
+  &__date {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 4.8rem;
+
+    background: rgba(0, 0, 0, 0.02);
+
+    &__text {
+      font-size: 1.6rem;
+      text-align: right;
+      color: rgba(0, 0, 0, 0.65);
+    }
+  }
+
+  &__details {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.8rem;
+
+    &__container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      height: 4.8rem;
+      margin-right: 2.5rem;
+      margin-left: 3.5rem;
+    }
+
+    &__icon {
+      width: 2.4rem;
+      height: 2.4rem;
+
+      color: black;
+      opacity: 0.45;
+    }
+
+    &__text {
+      font-weight: 400;
+      text-align: right;
+      color: rgba(0, 0, 0, 0.65);
+    }
+  }
+}

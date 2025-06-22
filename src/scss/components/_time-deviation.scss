@@ -1,0 +1,18 @@
+.time-deviation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  padding: 0.5rem 0.5rem;
+  color: var(--Text-color-text-secondary);
+
+  &--green {
+    background-color: var(--Success-color-success-bg);
+  }
+  &--yellow {
+    background-color: var(--Warning-color-warning-bg);
+  }
+  &--red {
+    background-color: var(--Colors-red-1);
+  }
+}

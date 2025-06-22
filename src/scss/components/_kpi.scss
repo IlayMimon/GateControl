@@ -1,0 +1,24 @@
+.kpi {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+
+  font-size: 1.6rem;
+
+  svg {
+    stroke: var(--Text-color-text-secondary);
+  }
+
+  &__title {
+    padding: 0.3rem 0.5rem;
+
+    border-radius: 8px;
+    border: 2px solid;
+    white-space: nowrap;
+  }
+
+  &__value {
+    color: var(--Text-color-text);
+  }
+}

@@ -1,0 +1,13 @@
+.automation-modal {
+    width: 60% !important;
+    user-select: none;
+    &__content {
+        text-align: center;
+        padding: 20px;
+        &__animation{
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+        }
+    }
+}

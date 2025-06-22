@@ -1,0 +1,29 @@
+.ant-table-wrapper {
+  width: 100%;
+}
+
+.ant-table-thead > tr > th {
+  background: var(--Background-color-bg-text-active) !important;
+  color: var(--Text-color-text-secondary) !important;
+  font-weight: 500 !important;
+  padding: 1.2rem !important;
+  font-size: 1.2rem !important;
+}
+
+.ant-table-tbody > tr > td {
+  border-bottom: 1px solid var(--Border-color-border-secondary) !important;
+}
+
+.ant-table-cell {
+  padding: 0.8rem !important;
+  color: var(--Text-color-text-secondary);
+  border-radius: 0 !important;
+
+  &::before {
+    width: 0 !important;
+  }
+}
+
+.ant-menu {
+  border-inline-end: none !important;
+}

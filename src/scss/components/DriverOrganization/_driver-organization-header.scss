@@ -1,0 +1,47 @@
+.driver-organization-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 2.4rem 3.2rem;
+
+  direction: ltr;
+
+  & * {
+    direction: ltr;
+  }
+
+  &__button {
+    &__container {
+      display: flex;
+      align-items: center;
+      gap: 1.6rem;
+    }
+
+    &__icon {
+      width: 1.6rem;
+      height: 1.6rem;
+    }
+  }
+
+  &__title {
+    font-size: 2.4rem;
+    font-weight: 500;
+
+    &__container {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    &__name {
+      height: 1.6rem;
+      padding-left: 1rem;
+
+      font-size: 2.4rem;
+      line-height: 1.6rem;
+      border-left: 0.15rem solid #d9d9d9;
+    }
+  }
+}
