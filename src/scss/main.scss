@@ -7,5 +7,10 @@
 @use "./base/base";
 
 // Pages
+@use "./pages/home-page";
 
 // Components
+@use "./components/location-item";
+@use "./components/location-selector";
+@use "./components/kpi";
+@use "./components/kpies";

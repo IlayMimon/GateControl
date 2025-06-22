@@ -1,0 +1,23 @@
+.home-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  gap: 5rem;
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    h1 {
+      font-size: 5rem;
+    }
+
+    h2 {
+      font-size: 3rem;
+    }
+  }
+}
