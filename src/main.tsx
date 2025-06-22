@@ -3,7 +3,6 @@ import { createRoot } from "react-dom/client";
 import "./scss/main.scss";
 import App from "./App.tsx";
 import axios from "axios";
-// import "mimic";
 
 if (import.meta.env.PROD) {
   axios.defaults.baseURL = window.location.pathname.split("/", 3).join("/");
