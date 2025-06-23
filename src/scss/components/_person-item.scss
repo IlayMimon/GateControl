@@ -2,13 +2,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 1rem;
-
-  padding: 2rem;
+  gap: 2rem;
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 1.5rem;
   width: 100%;
-
-  font-size: 1.5rem;
-  border: 1px solid black;
+  color: rgb(220, 220, 220);
+  font-size: 2rem;
+  border: var(--Border);
+  border-radius: 8px;
 
   &__right {
     &__title {

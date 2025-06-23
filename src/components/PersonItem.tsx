@@ -1,9 +1,9 @@
-import { Button } from "antd";
-import { Person } from "../hooks/data/useGetPeople";
+import { Button } from 'antd';
+import { Person } from '../hooks/data/useGetPeople';
 
 interface IPersonItemProps {
   person: Person;
-  mode: "action" | "status";
+  mode: 'action' | 'status';
 }
 function PersonItem({ person, mode }: IPersonItemProps) {
   return (
@@ -13,21 +13,25 @@ function PersonItem({ person, mode }: IPersonItemProps) {
           <span className="person-item__right__title__name">
             {person.Title} {person.LastName}
           </span>
-          <span className="person-item__right__title__army-id">{person.ArmyId}</span>
+          <span className="person-item__right__title__army-id">
+            {person.ArmyId}
+          </span>
         </div>
         <div className="person-item__subtitle">
-          <span className="person-item__subtitle__branch">אגף: {person.Branch}</span>
+          <span className="person-item__subtitle__branch">
+            אגף: {person.Branch}
+          </span>
         </div>
       </div>
-      {mode === "status" && (
+      {mode === 'status' && (
         <div className="person-item__status">
           <span className="person-item__status__text">נמצא במתקן</span>
         </div>
       )}
-      {mode === "action" && (
+      {mode === 'action' && (
         <div className="person-item__left">
-          <Button>כניסה</Button>
-          <Button>יציאה</Button>
+          <Button className="person-item__left--enter">כניסה</Button>
+          <Button className="person-item__left--enter">יציאה</Button>
         </div>
       )}
     </div>

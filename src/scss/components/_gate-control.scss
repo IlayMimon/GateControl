@@ -1,0 +1,10 @@
+.gate-control {
+  &__list {
+    overflow: scroll;
+    margin-top: 1rem;
+    height: 58.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+}

@@ -1,20 +1,21 @@
 // Utilities
-@use "./utilities/variables";
-@use "./utilities/mixins";
+@use './utilities/variables';
+@use './utilities/mixins';
 
 // Base
-@use "./base/typography";
-@use "./base/base";
+@use './base/typography';
+@use './base/base';
 
 // Pages
-@use "./pages/home-page";
+@use './pages/home-page';
 
 // Components
-@use "./components/home-page-body";
-@use "./components/location-item";
-@use "./components/location-selector";
-@use "./components/main-content";
-@use "./components/box-preview";
-@use "./components/kpi";
-@use "./components/kpies";
-@use "./components/person-item";
+@use './components/home-page-body';
+@use './components/location-item';
+@use './components/location-selector';
+@use './components/main-content';
+@use './components/box-preview';
+@use './components/kpi';
+@use './components/kpies';
+@use './components/gate-control';
+@use './components/person-item';

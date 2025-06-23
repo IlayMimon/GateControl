@@ -23,7 +23,7 @@ function KPIES() {
         icon={<IoPersonSharp />}
       />
       <KPI
-        title={'פעילות היום'}
+        title={'חוץ פיקוד'}
         value={
           actionsData?.filter((action) => action.ActionType.includes(location))
             ?.length || 0
