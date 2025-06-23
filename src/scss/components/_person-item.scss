@@ -19,14 +19,29 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        max-width: 17rem;
+        max-width: 10rem;
       }
     }
   }
 
   &__left {
     display: flex;
-    gap: 0.5rem;
+    gap: 1rem;
+
+    &__exit-button,
+    &__enter-button {
+      border: none;
+    }
+
+    &__exit-button {
+      background-color: #dd524c;
+      color: white;
+    }
+
+    &__enter-button {
+      background-color: #4ca154;
+      color: white;
+    }
   }
 }
 .toast-notification {

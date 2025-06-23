@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import { toast, ToastOptions } from 'react-toastify';
 import preformAction from '../functions/preformAction';
 import { Person } from '../hooks/data/useGetPeople';
+import { IoPersonAdd, IoPersonRemove } from 'react-icons/io5';
 
 interface IPersonItemProps {
   person: Person;
@@ -69,15 +70,19 @@ function PersonItem({ person, mode }: IPersonItemProps) {
       {mode === 'action' && (
         <div className="person-item__left">
           <Button
+            className="person-item__left__enter-button"
             onClick={() => handleClick(location, 'inbound', person.ID)}
             disabled={isLoading}
           >
+            <IoPersonAdd style={{ marginLeft: '2px' }} />
             כניסה
           </Button>
           <Button
+            className="person-item__left__exit-button"
             onClick={() => handleClick(location, 'outbound', person.ID)}
             disabled={isLoading}
           >
+            <IoPersonRemove style={{ marginLeft: '2px' }} />
             יציאה
           </Button>
         </div>
