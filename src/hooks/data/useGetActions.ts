@@ -7,6 +7,7 @@ type Action = {
   Created: Date;
   ArmyId: { ArmyId: string };
   ActionType: string;
+  Location: string;
 };
 
 const useGetActions = (todayOnly = false) => {
@@ -17,10 +18,9 @@ const useGetActions = (todayOnly = false) => {
     : "";
 
   const { data, isLoading, refetch } = useQueryFetchRequest<SharepointQueryResultArray<Action>>(
-    `/_api/web/lists/getbytitle('Actions')/items?$select=ID,Created,ArmyId/ArmyId,ActionType&$expand=ArmyId${todayFilter}`
+    `/_api/web/lists/getbytitle('Actions')/items?$select=ID,Created,ArmyId/ArmyId,ActionType,Location&$expand=ArmyId${todayFilter}`
   );
 
-  console.log("useGetActions", data, isLoading, todayOnly);
   return { data: data?.d.results, isLoading, refetch };
 };
 

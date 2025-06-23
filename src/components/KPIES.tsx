@@ -19,7 +19,7 @@ function KPIES() {
       />
       <KPI
         title={"פעילות היום"}
-        value={actionsData?.filter((action) => action.ActionType.includes(location))?.length || 0}
+        value={actionsData?.filter((action) => action.Location === location)?.length || 0}
         icon={undefined}
       />
       <KPI title={'סה"כ אנשים'} value={peopleData?.length || 0} icon={undefined} />

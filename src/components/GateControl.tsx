@@ -11,15 +11,13 @@ interface IGateControlProps {
 }
 
 function GateControl({ mode }: IGateControlProps) {
-  const { data } = useGetPeople();
+  const { data, isLoading } = useGetPeople();
   const [searchValue, setSearchValue] = useState<string | undefined>();
   const [searchParams] = useSearchParams();
   const location = searchParams.get("location");
 
   let filteredData =
-    mode === "status" && location
-      ? data?.filter((person) => person.Location.includes(location))
-      : data;
+    mode === "status" && location ? data?.filter((person) => person.Location === location) : data;
 
   filteredData = searchValue
     ? filteredData?.filter((person) => person.ArmyId.includes(searchValue))
@@ -32,8 +30,10 @@ function GateControl({ mode }: IGateControlProps) {
         onChange={(e) => setSearchValue(e.target.value)}
         placeholder="הכנס מספר אישי"
       />
-      {filteredData?.length ? (
-        filteredData.map((person) => <PersonItem person={person} mode={mode} />)
+      {isLoading ? (
+        <div className="gate-control__loading">טוען...</div>
+      ) : filteredData?.length ? (
+        filteredData.map((person) => <PersonItem key={person.ID} person={person} mode={mode} />)
       ) : (
         <div className="gate-control__no-data">אין נתונים</div>
       )}
