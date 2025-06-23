@@ -1,7 +1,12 @@
 import { useSearchParams } from 'react-router-dom';
 import useGetActions from '../hooks/data/useGetActions';
 import useGetPeople from '../hooks/data/useGetPeople';
-import { IoPeople, IoAnalyticsOutline, IoPersonSharp } from 'react-icons/io5';
+import {
+  IoPeople,
+  IoAnalyticsOutline,
+  IoPersonSharp,
+  IoIdCard,
+} from 'react-icons/io5';
 
 import KPI from './KPI';
 
@@ -26,6 +31,14 @@ function KPIES() {
         title={'חוץ פיקוד'}
         value={
           actionsData?.filter((action) => action.ActionType.includes(location))
+            ?.length || 0
+        }
+        icon={<IoIdCard />}
+      />
+      <KPI
+        title={'פעילות היום'}
+        value={
+          actionsData?.filter((action) => action.Location === location)
             ?.length || 0
         }
         icon={<IoAnalyticsOutline />}
