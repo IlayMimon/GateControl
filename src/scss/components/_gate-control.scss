@@ -1,11 +1,28 @@
 .gate-control {
   &__list {
     overflow: scroll;
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #c1c1c1 transparent;
+
     margin-top: 0.5rem;
     height: 39rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
     direction: ltr;
+  }
+
+  &__list::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &__list::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+  }
+
+  &__list::-webkit-scrollbar-track {
+    background: transparent;
   }
 }
