@@ -19,6 +19,7 @@ const toastConfig: ToastOptions = {
   draggable: true,
   progress: undefined,
   theme: 'light',
+  className: 'toast-notification',
 };
 
 function PersonItem({ person, mode }: IPersonItemProps) {
