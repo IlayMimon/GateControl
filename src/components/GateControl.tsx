@@ -4,6 +4,7 @@ import { useState } from 'react';
 import PersonItem from './PersonItem';
 import { useSearchParams } from 'react-router-dom';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import NoDataPicture from '../assets/pictures/no-data.png';
 
 const { Search } = Input;
 
@@ -47,7 +48,10 @@ function GateControl({ mode }: IGateControlProps) {
             <PersonItem key={person.ID} person={person} mode={mode} />
           ))
         ) : (
-          <div className="gate-control__no-data">אין נתונים</div>
+          <div className="gate-control__no-data">
+            <img src={NoDataPicture} alt="No data" />
+            <span>אין מידע</span>
+          </div>
         )}
       </div>
     </div>
