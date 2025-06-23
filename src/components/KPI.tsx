@@ -6,10 +6,10 @@ interface IKPIProps {
 function KPI({ title, value, icon }: IKPIProps) {
   return (
     <div className="kpi">
+      <span className="kpi__icon">{icon}</span>
       <span className="kpi__title">
-        {title} - {value}
+        {title} - <span className="kpi__title--value">{value}</span>
       </span>
-      <span  className="kpi__icon">{icon}</span>
     </div>
   );
 }

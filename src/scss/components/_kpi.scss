@@ -2,6 +2,20 @@
   padding: 2rem 3rem;
 
   font-size: 2rem;
-  border: 1px solid black;
+  border: var(--Border);
   border-radius: 10px;
+  background-color: #484c5d;
+  display: flex;
+  gap: 1rem;
+  &__title {
+    font-weight: 300;
+    color: rgb(240, 240, 240);
+    &--value {
+      font-weight: 700;
+      color: rgb(255, 255, 255);
+    }
+  }
+  &__icon {
+    color: #1987ea;
+  }
 }

@@ -18,8 +18,7 @@ body {
 
   --Success-color-success-bg: #f6ffed;
   --Warning-color-warning-bg: #fffbe6;
-
-  --Border-color-border: #d9d9d9;
+  --Border-color-border: rgba(255, 255, 255, 0.2);
   --Border-color-border-secondary: #f0f0f0;
   --Border: 1px solid var(--Border-color-border);
   --Border-secondary: 1px solid var(--Border-color-border-secondary);
