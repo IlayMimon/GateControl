@@ -1,4 +1,4 @@
-import LocationItem from "./LocationItem";
+import LocationItem from './LocationItem';
 
 interface ILocationSelectorProps {
   titles: string[];
