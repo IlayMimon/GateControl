@@ -3,7 +3,7 @@ import { Input } from "antd";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import NoDataPicture from "../assets/pictures/no-data.png";
-import { usePeopleContext } from "../context/PeopleContext";
+import { useGateControlContext } from "../context/GateControlContext";
 import PersonItem from "./PersonItem";
 
 const { Search } = Input;
@@ -13,7 +13,7 @@ interface IGateControlProps {
 }
 
 function GateControl({ mode }: IGateControlProps) {
-  const { peopleData, peopleIsLoading } = usePeopleContext();
+  const { peopleData, peopleIsLoading } = useGateControlContext();
   const [searchValue, setSearchValue] = useState<string | undefined>();
   const [searchParams] = useSearchParams();
   const location = searchParams.get("location");
@@ -44,7 +44,9 @@ function GateControl({ mode }: IGateControlProps) {
             />
           </div>
         ) : filteredData?.length ? (
-          filteredData.map((person) => <PersonItem key={person.ID} person={person} mode={mode} />)
+          filteredData.map((person) => (
+            <PersonItem key={person.ID} person={person} mode={mode} />
+          ))
         ) : (
           <div className="gate-control__no-data">
             <img src={NoDataPicture} alt="No data" />

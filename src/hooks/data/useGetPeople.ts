@@ -6,16 +6,18 @@ export type Person = {
   ArmyId: string;
   Title: string;
   LastName: string;
-  Branch: number;
+  Branch?: { id: number; Title: string };
   Location: string;
 };
 
 const useGetPeople = () => {
-  const { data, isLoading, refetch } = useQueryFetchRequest<SharepointQueryResultArray<Person>>(
-    "/_api/web/lists/getbytitle('People')/items?$select=ID,ArmyId,Title,LastName,Branch,Location"
+  const { data, isLoading, refetch } = useQueryFetchRequest<
+    SharepointQueryResultArray<Person>
+  >(
+    "/_api/web/lists/getbytitle('People')/items?$select=ID,ArmyId,Title,LastName,Branch/Id,Branch/Title,Location&$expand=Branch"
   );
 
-  return { data: data?.d.results , isLoading, refetch };
+  return { data: data?.d.results, isLoading, refetch };
 };
 
 export default useGetPeople;

@@ -2,7 +2,7 @@ import { IoAnalyticsOutline, IoPeople, IoPersonSharp } from "react-icons/io5";
 import { useSearchParams } from "react-router-dom";
 import useGetActions from "../hooks/data/useGetActions";
 
-import { usePeopleContext } from "../context/PeopleContext";
+import { useGateControlContext } from "../context/GateControlContext";
 import KPI from "./KPI";
 
 function KPIES() {
@@ -10,21 +10,31 @@ function KPIES() {
   const location = searchParams.get("location");
 
   const { data: actionsData } = useGetActions(true);
-  const { peopleData } = usePeopleContext();
+  const { peopleData } = useGateControlContext();
 
   return location ? (
     <div className="kpies">
       <KPI
         title={"נמצא במתקן"}
-        value={peopleData?.filter((person) => person.Location === location).length || 0}
+        value={
+          peopleData?.filter((person) => person.Location === location).length ||
+          0
+        }
         icon={<IoPersonSharp />}
       />
       <KPI
         title={"פעילות היום"}
-        value={actionsData?.filter((action) => action.Location === location)?.length || 0}
+        value={
+          actionsData?.filter((action) => action.Location === location)
+            ?.length || 0
+        }
         icon={<IoAnalyticsOutline />}
       />
-      <KPI title={'סה"כ אנשים'} value={peopleData?.length || 0} icon={<IoPeople />} />
+      <KPI
+        title={'סה"כ אנשים'}
+        value={peopleData?.length || 0}
+        icon={<IoPeople />}
+      />
     </div>
   ) : (
     <span>לא נבחר מיקום</span>
