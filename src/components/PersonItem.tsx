@@ -5,6 +5,7 @@ import { toast, ToastOptions } from 'react-toastify';
 import preformAction from '../functions/preformAction';
 import { Person } from '../hooks/data/useGetPeople';
 import { IoPersonAdd, IoPersonRemove } from 'react-icons/io5';
+import { log } from 'console';
 
 interface IPersonItemProps {
   person: Person;
@@ -31,8 +32,13 @@ function PersonItem({ person, mode }: IPersonItemProps) {
   const handleClick = async (
     location: 'פד"ם' | 'גני יעלים',
     actionType: 'inbound' | 'outbound',
-    personId: number
+    personId: number,
+    personBranch?: string
   ) => {
+    console.log('person branch ---- ', personBranch);
+    if (!personBranch) {
+      console.log('Branch is not defined for the person');
+    }
     setIsLoading(true);
     const response = await preformAction(location, actionType, personId);
     if (response === 'error') {
@@ -71,7 +77,9 @@ function PersonItem({ person, mode }: IPersonItemProps) {
         <div className="person-item__left">
           <Button
             className="person-item__left__enter-button"
-            onClick={() => handleClick(location, 'inbound', person.ID)}
+            onClick={() =>
+              handleClick(location, 'inbound', person.ID, person.Branch)
+            }
             disabled={isLoading}
           >
             <IoPersonAdd style={{ marginLeft: '2px' }} />
