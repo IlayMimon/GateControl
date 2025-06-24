@@ -1,7 +1,7 @@
-import { useSearchParams } from "react-router-dom";
-import KPIES from "./KPIES";
-import MainContent from "./MainContent";
-import Button from "antd/es/button";
+import { useSearchParams } from 'react-router-dom';
+import KPIES from './KPIES';
+import MainContent from './MainContent';
+import Button from 'antd/es/button';
 
 function HomePageBody() {
   const [, setSearchParams] = useSearchParams();
@@ -14,7 +14,12 @@ function HomePageBody() {
       <KPIES />
       <MainContent />
 
-      <Button onClick={handleClearLocation}>חזור</Button>
+      <Button
+        className="home-page-body__back-btn"
+        onClick={handleClearLocation}
+      >
+        חזור
+      </Button>
     </div>
   );
 }
