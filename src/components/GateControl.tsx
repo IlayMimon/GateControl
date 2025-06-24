@@ -1,26 +1,26 @@
-import { Input } from 'antd';
-import useGetPeople from '../hooks/data/useGetPeople';
-import { useState } from 'react';
-import PersonItem from './PersonItem';
-import { useSearchParams } from 'react-router-dom';
-import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import { Input } from "antd";
+import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { usePeopleContext } from "../context/PeopleContext";
+import PersonItem from "./PersonItem";
 
 const { Search } = Input;
 
 interface IGateControlProps {
-  mode: 'action' | 'status';
+  mode: "action" | "status";
 }
 
 function GateControl({ mode }: IGateControlProps) {
-  const { data, isLoading } = useGetPeople();
+  const { peopleData, peopleIsLoading } = usePeopleContext();
   const [searchValue, setSearchValue] = useState<string | undefined>();
   const [searchParams] = useSearchParams();
-  const location = searchParams.get('location');
+  const location = searchParams.get("location");
 
   let filteredData =
-    mode === 'status' && location
-      ? data?.filter((person) => person.Location === location)
-      : data;
+    mode === "status" && location
+      ? peopleData?.filter((person) => person.Location === location)
+      : peopleData;
 
   filteredData = searchValue
     ? filteredData?.filter((person) => person.ArmyId.includes(searchValue))
@@ -34,7 +34,7 @@ function GateControl({ mode }: IGateControlProps) {
         placeholder="הכנס מספר אישי"
       />
       <div className="gate-control__list">
-        {isLoading ? (
+        {peopleIsLoading ? (
           <div className="gate-control__loading">
             <DotLottieReact
               src="https://lottie.host/8026cb7a-061a-44af-948e-22d13b9e55a7/TXtEMrjcEY.lottie"
@@ -43,9 +43,7 @@ function GateControl({ mode }: IGateControlProps) {
             />
           </div>
         ) : filteredData?.length ? (
-          filteredData.map((person) => (
-            <PersonItem key={person.ID} person={person} mode={mode} />
-          ))
+          filteredData.map((person) => <PersonItem key={person.ID} person={person} mode={mode} />)
         ) : (
           <div className="gate-control__no-data">אין נתונים</div>
         )}
