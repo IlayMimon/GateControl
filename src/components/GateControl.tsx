@@ -3,7 +3,7 @@ import { Input, Select } from 'antd';
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import NoDataPicture from '../assets/pictures/no-data.png';
-import { usePeopleContext } from '../context/PeopleContext';
+import { useGateControlContext } from '../context/GateControlContext';
 import PersonItem from './PersonItem';
 
 const { Search } = Input;
@@ -13,7 +13,7 @@ interface IGateControlProps {
 }
 
 function GateControl({ mode }: IGateControlProps) {
-  const { peopleData, peopleIsLoading } = usePeopleContext();
+  const { peopleData, peopleIsLoading } = useGateControlContext();
   const [searchValue, setSearchValue] = useState<string | undefined>();
   const [addingPerson, setAddingPerson] = useState<boolean>(false);
   const [firstName, setFirstName] = useState('');
@@ -22,7 +22,7 @@ function GateControl({ mode }: IGateControlProps) {
   const [branch, setBranch] = useState<string | undefined>(undefined);
   const [searchParams] = useSearchParams();
   const location = searchParams.get('location');
-
+  const { branches } = useGateControlContext();
   let filteredData =
     mode === 'status' && location
       ? peopleData?.filter((person) => person.Location === location)
@@ -49,9 +49,11 @@ function GateControl({ mode }: IGateControlProps) {
             />
           </div>
         ) : filteredData?.length ? (
-          filteredData.map((person) => (
-            <PersonItem key={person.ID} person={person} mode={mode} />
-          ))
+          filteredData
+            .slice(0, 20)
+            .map((person) => (
+              <PersonItem key={person.ID} person={person} mode={mode} />
+            ))
         ) : (
           <div className="gate-control__no-data">
             {!addingPerson ? (
@@ -92,11 +94,11 @@ function GateControl({ mode }: IGateControlProps) {
                   value={branch}
                   onChange={(value) => setBranch(value)}
                 >
-                  {/* {branch.map((branch) => (
-                    <Select.Option key={branch} value={branch}>
-                      {branch}
+                  {branches?.map((branch) => (
+                    <Select.Option key={branch.ID} value={branch.ID}>
+                      {branch.Title}
                     </Select.Option>
-                  ))} */}
+                  ))}
                 </Select>
                 <div className="gate-control__add-buttons">
                   <button

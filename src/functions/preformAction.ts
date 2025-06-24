@@ -3,8 +3,10 @@ import { addItemToList, patchItemInList } from "./postToSharepoint";
 const preformAction = async (
   location: 'פד"ם' | "גני יעלים",
   actionType: "inbound" | "outbound",
-  personId: number
+  personId: number,
+  personBranch?: number
 ) => {
+  
   const actionResponse = await addItemToList("Actions", {
     ArmyIdId: personId,
     ActionType: actionType,
@@ -15,12 +17,15 @@ const preformAction = async (
     "People",
     {
       Location: actionType === "inbound" ? location : "לא נמצא",
+      BranchId: personBranch,
     },
     personId,
     "*"
   );
 
-  return actionResponse.status === 201 && personResponse.status === 204 ? "success" : "error";
+  return actionResponse.status === 201 && personResponse.status === 204
+    ? "success"
+    : "error";
 };
 
 export default preformAction;
