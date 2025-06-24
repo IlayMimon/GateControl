@@ -1,6 +1,6 @@
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { Input, Select } from 'antd';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import NoDataPicture from '../assets/pictures/no-data.png';
 import { useGateControlContext } from '../context/GateControlContext';
@@ -23,14 +23,18 @@ function GateControl({ mode }: IGateControlProps) {
   const [searchParams] = useSearchParams();
   const location = searchParams.get('location');
   const { branches } = useGateControlContext();
-  let filteredData =
-    mode === 'status' && location
-      ? peopleData?.filter((person) => person.Location === location)
-      : peopleData;
+  const filteredData = useMemo(() => {
+    let data =
+      mode === 'status' && location
+        ? peopleData?.filter((person) => person.Location === location)
+        : peopleData;
 
-  filteredData = searchValue
-    ? filteredData?.filter((person) => person.ArmyId.includes(searchValue))
-    : filteredData;
+    if (searchValue && searchValue.length > 3) {
+      data = data?.filter((person) => person.ArmyId.includes(searchValue));
+    }
+
+    return data;
+  }, [mode, location, peopleData, searchValue]);
 
   return (
     <div className="gate-control">
