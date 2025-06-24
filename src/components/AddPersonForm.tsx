@@ -5,6 +5,7 @@ import addPerson from "../functions/addPerson";
 import { Branch } from "../hooks/data/useGetBranch";
 import { toastConfig } from "./PersonItem";
 import { useState } from "react";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 interface IAddPersonFormProps {
   branches: Branch[];
@@ -15,7 +16,13 @@ export function AddPersonForm({ branches, onCancel }: IAddPersonFormProps) {
   const { setPeopleData } = useGateControlContext();
   const [isLoading, setIsLoading] = useState(false);
 
-  return (
+  return isLoading ? (
+    <DotLottieReact
+      src="https://lottie.host/8026cb7a-061a-44af-948e-22d13b9e55a7/TXtEMrjcEY.lottie"
+      loop
+      autoplay
+    />
+  ) : (
     <Form
       layout="vertical"
       onFinish={async (values: {
@@ -93,28 +100,24 @@ export function AddPersonForm({ branches, onCancel }: IAddPersonFormProps) {
         </Select>
       </Form.Item>
 
-      {isLoading ? (
-        <span>טוען...</span>
-      ) : (
-        <Form.Item>
-          <div className="gate-control__add-buttons">
-            <Button
-              className="gate-control__add-button"
-              type="primary"
-              htmlType="submit"
-            >
-              הוספה
-            </Button>
-            <Button
-              className="gate-control__cancel-button"
-              onClick={onCancel}
-              htmlType="button"
-            >
-              ביטול
-            </Button>
-          </div>
-        </Form.Item>
-      )}
+      <Form.Item>
+        <div className="gate-control__add-buttons">
+          <Button
+            className="gate-control__add-button"
+            type="primary"
+            htmlType="submit"
+          >
+            הוספה
+          </Button>
+          <Button
+            className="gate-control__cancel-button"
+            onClick={onCancel}
+            htmlType="button"
+          >
+            ביטול
+          </Button>
+        </div>
+      </Form.Item>
     </Form>
   );
 }

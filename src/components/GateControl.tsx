@@ -39,6 +39,7 @@ function GateControl({ mode }: IGateControlProps) {
         value={searchValue}
         onChange={(e) => setSearchValue(e.target.value)}
         placeholder="הכנס מספר אישי"
+        maxLength={7}
       />
       <div className="gate-control__list">
         {peopleIsLoading ? (
