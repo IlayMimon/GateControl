@@ -4,6 +4,7 @@ import "./scss/main.scss";
 import App from "./App.tsx";
 import axios from "axios";
 import QueryProvider from "./components/QueryProvider.tsx";
+import { PeopleProvider } from "./context/PeopleContext.tsx";
 
 if (import.meta.env.PROD) {
   axios.defaults.baseURL = window.location.pathname.split("/", 3).join("/");
@@ -20,7 +21,9 @@ axios.defaults.headers.common.Accept = "application/json;odata=verbose";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryProvider>
-      <App />
+      <PeopleProvider>
+        <App />
+      </PeopleProvider>
     </QueryProvider>
   </StrictMode>
 );

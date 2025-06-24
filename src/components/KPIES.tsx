@@ -1,8 +1,8 @@
 import { IoAnalyticsOutline, IoPeople, IoPersonSharp } from "react-icons/io5";
 import { useSearchParams } from "react-router-dom";
 import useGetActions from "../hooks/data/useGetActions";
-import useGetPeople from "../hooks/data/useGetPeople";
 
+import { usePeopleContext } from "../context/PeopleContext";
 import KPI from "./KPI";
 
 function KPIES() {
@@ -10,7 +10,7 @@ function KPIES() {
   const location = searchParams.get("location");
 
   const { data: actionsData } = useGetActions(true);
-  const { data: peopleData } = useGetPeople();
+  const { peopleData } = usePeopleContext();
 
   return location ? (
     <div className="kpies">
