@@ -1,30 +1,31 @@
-import { addItemToList, patchItemInList } from './postToSharepoint';
+import { addItemToList, patchItemInList } from "./postToSharepoint";
 
 const preformAction = async (
-  location: 'פד"ם' | 'גני יעלים',
-  actionType: 'inbound' | 'outbound',
+  location: 'פד"ם' | "גני יעלים",
+  actionType: "inbound" | "outbound",
   personId: number,
   personBranch?: number
 ) => {
-  const actionResponse = await addItemToList('Actions', {
+  
+  const actionResponse = await addItemToList("Actions", {
     ArmyIdId: personId,
     ActionType: actionType,
     Location: location,
-    BranchId: personBranch,
   });
 
   const personResponse = await patchItemInList(
-    'People',
+    "People",
     {
-      Location: actionType === 'inbound' ? location : 'לא נמצא',
+      Location: actionType === "inbound" ? location : "לא נמצא",
+      BranchId: personBranch,
     },
     personId,
-    '*'
+    "*"
   );
 
   return actionResponse.status === 201 && personResponse.status === 204
-    ? 'success'
-    : 'error';
+    ? "success"
+    : "error";
 };
 
 export default preformAction;

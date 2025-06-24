@@ -27,18 +27,12 @@ const toastConfig: ToastOptions = {
 
 function PersonItem({ person, mode }: IPersonItemProps) {
   const [isLoading, setIsLoading] = useState(false);
-  const [branch, setBranch] = useState<number | undefined>(person.Branch);
+  const [branch, setBranch] = useState<number | undefined>(person.Branch?.id);
   const [searchParams] = useSearchParams();
   const location = searchParams.get("location") as 'פד"ם' | "גני יעלים";
-  const { branches } = useGateControlContext();
+  const { branches, setPeopleData } = useGateControlContext();
 
-  const handleClick = async (
-    location: 'פד"ם' | "גני יעלים",
-    actionType: "inbound" | "outbound",
-    personId: number,
-    personBranch?: number
-  ) => {
-    console.log("person branch ---- ", personBranch);
+  const handleClick = async (actionType: "inbound" | "outbound") => {
     setIsLoading(true);
 
     if (!person.Branch && !branch) {
@@ -46,13 +40,36 @@ function PersonItem({ person, mode }: IPersonItemProps) {
       setIsLoading(false);
       return;
     } else {
-      const response = await preformAction(location, actionType, personId);
+      const response = await preformAction(
+        location,
+        actionType,
+        person.ID,
+        branch
+      );
       if (response === "error") {
         toast.error("אירעה שגיאה בביצוע הפעולה", toastConfig);
       } else {
+        const updatedPerson = person;
+        if (branch && !person.Branch?.Title) {
+          updatedPerson.Branch = {
+            id: branch,
+            Title: branches?.find((b) => b.ID === branch)?.Title as string,
+          };
+        }
+        if (actionType === "inbound") {
+          updatedPerson.Location = location;
+        } else if (actionType === "outbound") {
+          updatedPerson.Location = "לא נמצא";
+        }
+
+        setPeopleData((prevValue) => {
+          return [
+            updatedPerson,
+            ...prevValue.filter((p) => p.ID !== person.ID),
+          ];
+        });
         toast.success("פעולה בוצעה בהצלחה", toastConfig);
       }
-      console.log(response);
 
       setIsLoading(false);
     }
@@ -60,7 +77,6 @@ function PersonItem({ person, mode }: IPersonItemProps) {
 
   const handleBranchChange = (value: number) => {
     setBranch(value);
-    console.log("Selected:", value);
   };
 
   return (
@@ -77,7 +93,7 @@ function PersonItem({ person, mode }: IPersonItemProps) {
         <div className="person-item__subtitle">
           <span className="person-item__subtitle__branch">
             אגף:
-            {!person.Branch ? (
+            {!person.Branch?.Title ? (
               <Select
                 showSearch
                 placeholder="בחר אגף"
@@ -101,7 +117,7 @@ function PersonItem({ person, mode }: IPersonItemProps) {
                 }))}
               />
             ) : (
-              person.Branch
+              ` ${person.Branch.Title} `
             )}
           </span>
         </div>
@@ -115,9 +131,7 @@ function PersonItem({ person, mode }: IPersonItemProps) {
         <div className="person-item__left">
           <Button
             className="person-item__left__enter-button"
-            onClick={() =>
-              handleClick(location, "inbound", person.ID, person.Branch)
-            }
+            onClick={() => handleClick("inbound")}
             disabled={isLoading}
           >
             <IoPersonAdd style={{ marginLeft: "2px" }} />
@@ -125,7 +139,7 @@ function PersonItem({ person, mode }: IPersonItemProps) {
           </Button>
           <Button
             className="person-item__left__exit-button"
-            onClick={() => handleClick(location, "outbound", person.ID)}
+            onClick={() => handleClick("outbound")}
             disabled={isLoading}
           >
             <IoPersonRemove style={{ marginLeft: "2px" }} />
