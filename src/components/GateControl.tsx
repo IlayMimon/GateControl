@@ -5,6 +5,7 @@ import { useSearchParams } from "react-router-dom";
 import NoDataPicture from "../assets/pictures/no-data.png";
 import { useGateControlContext } from "../context/GateControlContext";
 import PersonItem from "./PersonItem";
+import { AddPersonForm } from "./AddPersonForm";
 
 const { Search } = Input;
 
@@ -15,9 +16,10 @@ interface IGateControlProps {
 function GateControl({ mode }: IGateControlProps) {
   const { peopleData, peopleIsLoading } = useGateControlContext();
   const [searchValue, setSearchValue] = useState<string | undefined>();
+  const [addingPerson, setAddingPerson] = useState<boolean>(false);
   const [searchParams] = useSearchParams();
   const location = searchParams.get("location");
-
+  const { branches } = useGateControlContext();
   const filteredData = useMemo(() => {
     let data =
       mode === "status" && location
@@ -55,8 +57,27 @@ function GateControl({ mode }: IGateControlProps) {
             ))
         ) : (
           <div className="gate-control__no-data">
-            <img src={NoDataPicture} alt="No data" />
-            <span>אין מידע</span>
+            {!addingPerson ? (
+              <>
+                <img src={NoDataPicture} alt="No data" />
+                <span>אין מידע</span>
+                {mode === "action" && (
+                  <div className="gate-control__no-data-action">
+                    <button
+                      className="gate-control__no-data-button"
+                      onClick={() => setAddingPerson(true)}
+                    >
+                      להוספה לחצ/י
+                    </button>
+                  </div>
+                )}
+              </>
+            ) : (
+              <AddPersonForm
+                branches={branches || []}
+                onCancel={() => setAddingPerson(false)}
+              />
+            )}
           </div>
         )}
       </div>

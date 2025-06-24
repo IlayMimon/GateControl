@@ -36,4 +36,62 @@
     font-size: 2rem;
     color: #8a96a3;
   }
+  &__add-person {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    flex-direction: column;
+    width: 65%;
+    margin-top: 2rem;
+    background-color: rgb(255, 255, 255, 0.1);
+    padding: 2rem;
+  }
+  &__add-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  &__add-button,
+  &__cancel-button,
+  &__no-data-button {
+    width: 5rem;
+    height: 3rem;
+    border-radius: 0.5rem;
+    color: white;
+    font-size: 1.2rem;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+  }
+  &__add-button {
+    background-color: #2ecc71;
+    &:hover {
+      background-color: #27ae60;
+    }
+  }
+
+  &__cancel-button {
+    background-color: #e74c3c;
+    &:hover {
+      background-color: #c0392b;
+    }
+  }
+
+  &__no-data-button {
+    margin-top: 2rem;
+    width: 10rem;
+    font-size: 1.5rem;
+    background-color: #3498db;
+    &:hover {
+      background-color: #2980b9;
+    }
+  }
 }

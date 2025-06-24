@@ -13,7 +13,7 @@ interface IPersonItemProps {
   mode: "action" | "status";
 }
 
-const toastConfig: ToastOptions = {
+export const toastConfig: ToastOptions = {
   position: "top-right",
   autoClose: 5000,
   hideProgressBar: false,
@@ -35,7 +35,7 @@ function PersonItem({ person, mode }: IPersonItemProps) {
   const handleClick = async (actionType: "inbound" | "outbound") => {
     setIsLoading(true);
 
-    if (!person.Branch && !branch) {
+    if (!person.Branch?.Title && !branch) {
       toast.error("יש לבחור אגף", toastConfig);
       setIsLoading(false);
       return;
