@@ -2,6 +2,7 @@ import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { Input } from "antd";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import NoDataPicture from "../assets/pictures/no-data.png";
 import { usePeopleContext } from "../context/PeopleContext";
 import PersonItem from "./PersonItem";
 
@@ -45,7 +46,10 @@ function GateControl({ mode }: IGateControlProps) {
         ) : filteredData?.length ? (
           filteredData.map((person) => <PersonItem key={person.ID} person={person} mode={mode} />)
         ) : (
-          <div className="gate-control__no-data">אין נתונים</div>
+          <div className="gate-control__no-data">
+            <img src={NoDataPicture} alt="No data" />
+            <span>אין מידע</span>
+          </div>
         )}
       </div>
     </div>

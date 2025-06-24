@@ -1,9 +1,9 @@
+import { IoAnalyticsOutline, IoPeople, IoPersonSharp } from "react-icons/io5";
 import { useSearchParams } from "react-router-dom";
 import useGetActions from "../hooks/data/useGetActions";
-import { IoPeople, IoAnalyticsOutline, IoPersonSharp, IoIdCard } from "react-icons/io5";
 
-import KPI from "./KPI";
 import { usePeopleContext } from "../context/PeopleContext";
+import KPI from "./KPI";
 
 function KPIES() {
   const [searchParams] = useSearchParams();
@@ -18,11 +18,6 @@ function KPIES() {
         title={"נמצא במתקן"}
         value={peopleData?.filter((person) => person.Location === location).length || 0}
         icon={<IoPersonSharp />}
-      />
-      <KPI
-        title={"חוץ פיקוד"}
-        value={actionsData?.filter((action) => action.ActionType.includes(location))?.length || 0}
-        icon={<IoIdCard />}
       />
       <KPI
         title={"פעילות היום"}
