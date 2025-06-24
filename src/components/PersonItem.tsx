@@ -1,56 +1,56 @@
-import { Button } from 'antd';
-import { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { toast, ToastOptions } from 'react-toastify';
-import preformAction from '../functions/preformAction';
-import { Person } from '../hooks/data/useGetPeople';
-import { IoPersonAdd, IoPersonRemove } from 'react-icons/io5';
-import { Select } from 'antd';
-import useGetBranch from '../hooks/data/useGetBranch';
+import { Button } from "antd";
+import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { toast, ToastOptions } from "react-toastify";
+import preformAction from "../functions/preformAction";
+import { Person } from "../hooks/data/useGetPeople";
+import { IoPersonAdd, IoPersonRemove } from "react-icons/io5";
+import { Select } from "antd";
+import { useGateControlContext } from "../context/GateControlContext";
 
 interface IPersonItemProps {
   person: Person;
-  mode: 'action' | 'status';
+  mode: "action" | "status";
 }
 
 const toastConfig: ToastOptions = {
-  position: 'top-right',
+  position: "top-right",
   autoClose: 5000,
   hideProgressBar: false,
   closeOnClick: false,
   pauseOnHover: false,
   draggable: true,
   progress: undefined,
-  theme: 'light',
-  className: 'toast-notification',
+  theme: "light",
+  className: "toast-notification",
 };
 
 function PersonItem({ person, mode }: IPersonItemProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [branch, setBranch] = useState<number | undefined>(person.Branch);
   const [searchParams] = useSearchParams();
-  const location = searchParams.get('location') as 'פד"ם' | 'גני יעלים';
-  const { data: branchData } = useGetBranch();
+  const location = searchParams.get("location") as 'פד"ם' | "גני יעלים";
+  const { branches } = useGateControlContext();
 
   const handleClick = async (
-    location: 'פד"ם' | 'גני יעלים',
-    actionType: 'inbound' | 'outbound',
+    location: 'פד"ם' | "גני יעלים",
+    actionType: "inbound" | "outbound",
     personId: number,
     personBranch?: number
   ) => {
-    console.log('person branch ---- ', personBranch);
+    console.log("person branch ---- ", personBranch);
     setIsLoading(true);
 
     if (!person.Branch && !branch) {
-      toast.error('יש לבחור אגף', toastConfig);
+      toast.error("יש לבחור אגף", toastConfig);
       setIsLoading(false);
       return;
     } else {
       const response = await preformAction(location, actionType, personId);
-      if (response === 'error') {
-        toast.error('אירעה שגיאה בביצוע הפעולה', toastConfig);
+      if (response === "error") {
+        toast.error("אירעה שגיאה בביצוע הפעולה", toastConfig);
       } else {
-        toast.success('פעולה בוצעה בהצלחה', toastConfig);
+        toast.success("פעולה בוצעה בהצלחה", toastConfig);
       }
       console.log(response);
 
@@ -60,7 +60,7 @@ function PersonItem({ person, mode }: IPersonItemProps) {
 
   const handleBranchChange = (value: number) => {
     setBranch(value);
-    console.log('Selected:', value);
+    console.log("Selected:", value);
   };
 
   return (
@@ -90,12 +90,12 @@ function PersonItem({ person, mode }: IPersonItemProps) {
                         ? void 0
                         : option.label) !== null && _a !== void 0
                       ? _a
-                      : ''
+                      : ""
                   )
                     .toLowerCase()
                     .includes(input.toLowerCase());
                 }}
-                options={branchData?.map((branch) => ({
+                options={branches?.map((branch) => ({
                   value: branch.ID,
                   label: branch.Title,
                 }))}
@@ -106,29 +106,29 @@ function PersonItem({ person, mode }: IPersonItemProps) {
           </span>
         </div>
       </div>
-      {mode === 'status' && (
+      {mode === "status" && (
         <div className="person-item__status">
           <span className="person-item__status__text">נמצא במתקן</span>
         </div>
       )}
-      {mode === 'action' && (
+      {mode === "action" && (
         <div className="person-item__left">
           <Button
             className="person-item__left__enter-button"
             onClick={() =>
-              handleClick(location, 'inbound', person.ID, person.Branch)
+              handleClick(location, "inbound", person.ID, person.Branch)
             }
             disabled={isLoading}
           >
-            <IoPersonAdd style={{ marginLeft: '2px' }} />
+            <IoPersonAdd style={{ marginLeft: "2px" }} />
             כניסה
           </Button>
           <Button
             className="person-item__left__exit-button"
-            onClick={() => handleClick(location, 'outbound', person.ID)}
+            onClick={() => handleClick(location, "outbound", person.ID)}
             disabled={isLoading}
           >
-            <IoPersonRemove style={{ marginLeft: '2px' }} />
+            <IoPersonRemove style={{ marginLeft: "2px" }} />
             יציאה
           </Button>
         </div>
