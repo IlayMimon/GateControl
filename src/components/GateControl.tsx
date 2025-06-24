@@ -1,31 +1,28 @@
-import { DotLottieReact } from '@lottiefiles/dotlottie-react';
-import { Input, Select } from 'antd';
-import { useMemo, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import NoDataPicture from '../assets/pictures/no-data.png';
-import { useGateControlContext } from '../context/GateControlContext';
-import PersonItem from './PersonItem';
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import { Input } from "antd";
+import { useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import NoDataPicture from "../assets/pictures/no-data.png";
+import { useGateControlContext } from "../context/GateControlContext";
+import PersonItem from "./PersonItem";
+import { AddPersonForm } from "./AddPersonForm";
 
 const { Search } = Input;
 
 interface IGateControlProps {
-  mode: 'action' | 'status';
+  mode: "action" | "status";
 }
 
 function GateControl({ mode }: IGateControlProps) {
   const { peopleData, peopleIsLoading } = useGateControlContext();
   const [searchValue, setSearchValue] = useState<string | undefined>();
   const [addingPerson, setAddingPerson] = useState<boolean>(false);
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [armyId, setArmyId] = useState(searchValue);
-  const [branch, setBranch] = useState<string | undefined>(undefined);
   const [searchParams] = useSearchParams();
-  const location = searchParams.get('location');
+  const location = searchParams.get("location");
   const { branches } = useGateControlContext();
   const filteredData = useMemo(() => {
     let data =
-      mode === 'status' && location
+      mode === "status" && location
         ? peopleData?.filter((person) => person.Location === location)
         : peopleData;
 
@@ -64,7 +61,7 @@ function GateControl({ mode }: IGateControlProps) {
               <>
                 <img src={NoDataPicture} alt="No data" />
                 <span>אין מידע</span>
-                {mode === 'action' && (
+                {mode === "action" && (
                   <div className="gate-control__no-data-action">
                     <button
                       className="gate-control__no-data-button"
@@ -76,51 +73,10 @@ function GateControl({ mode }: IGateControlProps) {
                 )}
               </>
             ) : (
-              <div className="gate-control__add-person">
-                <Input
-                  placeholder="שם פרטי"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                />
-                <Input
-                  placeholder="שם משפחה"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                />
-                <Input
-                  placeholder="מספר אישי"
-                  defaultValue={searchValue}
-                  value={armyId}
-                  onChange={(e) => setArmyId(e.target.value)}
-                />
-                <Select
-                  placeholder="בחר אגף"
-                  value={branch}
-                  onChange={(value) => setBranch(value)}
-                >
-                  {branches?.map((branch) => (
-                    <Select.Option key={branch.ID} value={branch.ID}>
-                      {branch.Title}
-                    </Select.Option>
-                  ))}
-                </Select>
-                <div className="gate-control__add-buttons">
-                  <button
-                    className="gate-control__add-button"
-                    onClick={() => {
-                      setAddingPerson(false);
-                    }}
-                  >
-                    הוספה
-                  </button>
-                  <button
-                    className="gate-control__cancel-button"
-                    onClick={() => setAddingPerson(false)}
-                  >
-                    ביטול
-                  </button>
-                </div>
-              </div>
+              <AddPersonForm
+                branches={branches || []}
+                onCancel={() => setAddingPerson(false)}
+              />
             )}
           </div>
         )}
