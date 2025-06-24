@@ -44,9 +44,11 @@ function GateControl({ mode }: IGateControlProps) {
             />
           </div>
         ) : filteredData?.length ? (
-          filteredData.map((person) => (
-            <PersonItem key={person.ID} person={person} mode={mode} />
-          ))
+          filteredData
+            .slice(0, 20)
+            .map((person) => (
+              <PersonItem key={person.ID} person={person} mode={mode} />
+            ))
         ) : (
           <div className="gate-control__no-data">
             <img src={NoDataPicture} alt="No data" />
