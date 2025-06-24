@@ -5,7 +5,8 @@ import { toast, ToastOptions } from 'react-toastify';
 import preformAction from '../functions/preformAction';
 import { Person } from '../hooks/data/useGetPeople';
 import { IoPersonAdd, IoPersonRemove } from 'react-icons/io5';
-import { log } from 'console';
+import { Select } from 'antd';
+import useGetBranch from '../hooks/data/useGetBranch';
 
 interface IPersonItemProps {
   person: Person;
@@ -26,29 +27,40 @@ const toastConfig: ToastOptions = {
 
 function PersonItem({ person, mode }: IPersonItemProps) {
   const [isLoading, setIsLoading] = useState(false);
+  const [branch, setBranch] = useState<number | undefined>(person.Branch);
   const [searchParams] = useSearchParams();
   const location = searchParams.get('location') as 'פד"ם' | 'גני יעלים';
+  const { data: branchData } = useGetBranch();
 
   const handleClick = async (
     location: 'פד"ם' | 'גני יעלים',
     actionType: 'inbound' | 'outbound',
     personId: number,
-    personBranch?: string
+    personBranch?: number
   ) => {
     console.log('person branch ---- ', personBranch);
-    if (!personBranch) {
-      console.log('Branch is not defined for the person');
-    }
     setIsLoading(true);
-    const response = await preformAction(location, actionType, personId);
-    if (response === 'error') {
-      toast.error('אירעה שגיאה בביצוע הפעולה', toastConfig);
-    } else {
-      toast.success('פעולה בוצעה בהצלחה', toastConfig);
-    }
-    console.log(response);
 
-    setIsLoading(false);
+    if (!person.Branch && !branch) {
+      toast.error('יש לבחור אגף', toastConfig);
+      setIsLoading(false);
+      return;
+    } else {
+      const response = await preformAction(location, actionType, personId);
+      if (response === 'error') {
+        toast.error('אירעה שגיאה בביצוע הפעולה', toastConfig);
+      } else {
+        toast.success('פעולה בוצעה בהצלחה', toastConfig);
+      }
+      console.log(response);
+
+      setIsLoading(false);
+    }
+  };
+
+  const handleBranchChange = (value: number) => {
+    setBranch(value);
+    console.log('Selected:', value);
   };
 
   return (
@@ -64,7 +76,33 @@ function PersonItem({ person, mode }: IPersonItemProps) {
         </div>
         <div className="person-item__subtitle">
           <span className="person-item__subtitle__branch">
-            אגף: {person.Branch}
+            אגף:
+            {!person.Branch ? (
+              <Select
+                showSearch
+                placeholder="בחר אגף"
+                onChange={handleBranchChange}
+                filterOption={(input, option) => {
+                  var _a;
+                  return (
+                    (_a =
+                      option === null || option === void 0
+                        ? void 0
+                        : option.label) !== null && _a !== void 0
+                      ? _a
+                      : ''
+                  )
+                    .toLowerCase()
+                    .includes(input.toLowerCase());
+                }}
+                options={branchData?.map((branch) => ({
+                  value: branch.ID,
+                  label: branch.Title,
+                }))}
+              />
+            ) : (
+              person.Branch
+            )}
           </span>
         </div>
       </div>
