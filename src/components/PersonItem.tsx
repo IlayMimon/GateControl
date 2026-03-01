@@ -29,7 +29,9 @@ function PersonItem({ person, mode }: IPersonItemProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [branch, setBranch] = useState<number | undefined>(person.Branch?.id);
   const [searchParams] = useSearchParams();
-  const location = searchParams.get("location") as 'פד"ם' | "גני יעלים";
+  //TODO fix location logic in multiple places, maybe move it to context or create a custom hook for it
+  const tempLocation = searchParams.get("location") as 'פד"ם' | "מצודת האבות";
+  const location = tempLocation === "מצודת האבות" ? "גני יעלים" : tempLocation;
   const { branches, setPeopleData } = useGateControlContext();
 
   const handleClick = async (actionType: "inbound" | "outbound") => {
@@ -44,7 +46,7 @@ function PersonItem({ person, mode }: IPersonItemProps) {
         location,
         actionType,
         person.ID,
-        branch
+        branch,
       );
       if (response === "error") {
         toast.error("אירעה שגיאה בביצוע הפעולה", toastConfig);

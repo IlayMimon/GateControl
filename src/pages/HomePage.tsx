@@ -27,7 +27,12 @@ function HomePage() {
         <h2>{dayjs(new Date()).format("DD/MM/YYYY")}</h2>
       </div>
       <div className="home-page__body">
-        {location ? <HomePageBody /> : <LocationSelector titles={['פד"ם', "גני יעלים"]} />}
+        {/* TODO fix location logic in multiple places, maybe move it to context or create a custom hook for it */}
+        {location ? (
+          <HomePageBody />
+        ) : (
+          <LocationSelector titles={['פד"ם', "מצודת האבות", "בזל"]} />
+        )}
       </div>
     </div>
   );

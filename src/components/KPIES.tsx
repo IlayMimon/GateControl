@@ -7,7 +7,11 @@ import KPI from "./KPI";
 
 function KPIES() {
   const [searchParams] = useSearchParams();
-  const location = searchParams.get("location");
+  //TODO fix location logic in multiple places, maybe move it to context or create a custom hook for it
+  let location = searchParams.get("location");
+  if (location === "מצודת האבות") {
+    location = "גני יעלים";
+  }
 
   const { data: actionsData } = useGetActions(true);
   const { peopleData } = useGateControlContext();
