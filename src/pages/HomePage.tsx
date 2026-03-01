@@ -31,7 +31,7 @@ function HomePage() {
         {location ? (
           <HomePageBody />
         ) : (
-          <LocationSelector titles={['פד"ם', "מצודת האבות", "בזל"]} />
+          <LocationSelector titles={['פד"ם', "מצודת האבות", "באזל"]} />
         )}
       </div>
     </div>
