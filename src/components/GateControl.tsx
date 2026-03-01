@@ -117,8 +117,6 @@ function GateControl({ mode, searchValue, onSearchChange }: IGateControlProps) {
           <div className="gate-control__no-data">
             {!addingPerson ? (
               <>
-                <img src={NoDataPicture} alt="No data" />
-                <span>אין מידע</span>
                 {mode === "action" && (
                   <div className="gate-control__no-data-action">
                     <button
@@ -132,6 +130,8 @@ function GateControl({ mode, searchValue, onSearchChange }: IGateControlProps) {
                     </button>
                   </div>
                 )}
+                <img src={NoDataPicture} alt="No data" />
+                <span>אין מידע</span>
               </>
             ) : (
               <AddPersonForm

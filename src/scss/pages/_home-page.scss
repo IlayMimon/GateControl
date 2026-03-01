@@ -1,16 +1,17 @@
 .home-page {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  gap: 5rem;
-  min-height: 100vh;
-  padding: 2rem;
+  gap: 2rem;
+  height: 100vh;
+  overflow: hidden;
+  padding: 2rem 2rem 1.5rem;
   background:
     radial-gradient(ellipse 70% 40% at 50% -5%, rgba(0, 122, 255, 0.08) 0%, transparent 55%),
     linear-gradient(180deg, #eef2f8 0%, #e8edf5 100%);
 
   &__header {
+    flex-shrink: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -33,17 +34,22 @@
   }
 
   &__body {
+    flex: 1;
+    min-height: 0;
     width: 100%;
     display: flex;
     justify-content: center;
+    overflow: hidden;
   }
 }
 
-// Tablet
-@media (max-width: 768px) {
+// Tablet & below — revert to scrollable page
+@media (max-width: 1050px) {
   .home-page {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
     gap: 3rem;
-    justify-content: flex-start;
     padding-top: 3rem;
 
     &__header {
@@ -54,6 +60,11 @@
       h2 {
         font-size: 2.2rem;
       }
+    }
+
+    &__body {
+      flex: none;
+      overflow: visible;
     }
   }
 }

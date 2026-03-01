@@ -6,8 +6,9 @@
   gap: 1rem;
 
   padding: 3rem;
-  height: 50rem;
   width: 50rem;
+  flex: 1;
+  min-height: 0;
 
   background: var(--glass-bg);
   backdrop-filter: blur(24px) saturate(150%);
@@ -35,11 +36,13 @@
   }
 }
 
-// Fluid width when stacked (below 1050px)
+// Fluid width + fixed height when stacked (below 1050px)
 @media (max-width: 1050px) {
   .box-preview {
     width: 90vw;
     max-width: 50rem;
+    flex: none;
+    height: 50rem;
   }
 }
 
