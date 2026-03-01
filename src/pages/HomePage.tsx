@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import HomePageBody from "../components/HomePageBody";
 import { ToastContainer } from "react-toastify";
 import LocationSelector from "../components/LocationSelector";
+import BiLogo from "../assets/pictures/bi-logo.png";
 
 function HomePage() {
   const [searchParams] = useSearchParams();
@@ -10,6 +11,10 @@ function HomePage() {
 
   return (
     <div className="home-page">
+      <div className="home-page__credit">
+        <img src={BiLogo} alt="BI Logo" className="home-page__credit-logo" />
+        <span>פותח ע״י פלוגת BI DATA גדוד 373</span>
+      </div>
       <ToastContainer
         position="top-right"
         autoClose={5000}

@@ -3,8 +3,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  gap: 3rem;
+  gap: 1rem;
   width: 100%;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
 
   &__back-btn {
     position: fixed;
@@ -30,6 +33,15 @@
       border-color: rgba(0, 122, 255, 0.40);
       color: #007AFF;
     }
+  }
+}
+
+// Tablet & below — revert to natural flow
+@media (max-width: 1050px) {
+  .home-page-body {
+    flex: none;
+    min-height: unset;
+    overflow: visible;
   }
 }
 
