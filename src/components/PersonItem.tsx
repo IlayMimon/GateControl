@@ -44,7 +44,7 @@ function PersonItem({ person, mode }: IPersonItemProps) {
         location,
         actionType,
         person.ID,
-        branch
+        branch,
       );
       if (response === "error") {
         toast.error("אירעה שגיאה בביצוע הפעולה", toastConfig);
@@ -137,6 +137,7 @@ function PersonItem({ person, mode }: IPersonItemProps) {
             <IoPersonAdd style={{ marginLeft: "2px" }} />
             כניסה
           </Button>
+
           <Button
             className="person-item__left__exit-button"
             onClick={() => handleClick("outbound")}

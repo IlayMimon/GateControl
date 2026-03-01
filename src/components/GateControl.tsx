@@ -11,15 +11,21 @@ const { Search } = Input;
 
 interface IGateControlProps {
   mode: "action" | "status";
+  searchValue?: string;
+  onSearch(searchValue?: string): void;
 }
 
-function GateControl({ mode }: IGateControlProps) {
+function GateControl({ mode, searchValue, onSearch }: IGateControlProps) {
   const { peopleData, peopleIsLoading } = useGateControlContext();
-  const [searchValue, setSearchValue] = useState<string | undefined>();
+
   const [addingPerson, setAddingPerson] = useState<boolean>(false);
+
   const [searchParams] = useSearchParams();
+
   const location = searchParams.get("location");
+  
   const { branches } = useGateControlContext();
+  
   const filteredData = useMemo(() => {
     let data =
       mode === "status" && location
@@ -37,7 +43,7 @@ function GateControl({ mode }: IGateControlProps) {
     <div className="gate-control">
       <Search
         value={searchValue}
-        onChange={(e) => setSearchValue(e.target.value)}
+        onChange={(e) => onSearch(e.target.value)}
         placeholder="הכנס מספר אישי"
         maxLength={7}
       />
