@@ -1,6 +1,6 @@
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import { Button, Input, Select } from "antd";
-import { useMemo, useState } from "react";
+import { Button, Input, InputRef, Select } from "antd";
+import { useRef, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import NoDataPicture from "../assets/pictures/no-data.png";
 import { useGateControlContext } from "../context/GateControlContext";
@@ -14,13 +14,15 @@ const { Search } = Input;
 
 interface IGateControlProps {
   mode: "action" | "status";
+  searchValue: string | undefined;
+  onSearchChange?: (val: string) => void;
 }
 
-function GateControl({ mode }: IGateControlProps) {
+function GateControl({ mode, searchValue, onSearchChange }: IGateControlProps) {
   const { peopleData, peopleIsLoading } = useGateControlContext();
-  const [searchValue, setSearchValue] = useState<string | undefined>();
   const [addingPerson, setAddingPerson] = useState<boolean>(false);
   const [wingFilter, setWingFilter] = useState<string | undefined>();
+  const searchRef = useRef<InputRef>(null);
   const [searchParams] = useSearchParams();
   //TODO fix location logic in multiple places, maybe move it to context or create a custom hook for it
   let location = searchParams.get("location");
@@ -52,14 +54,24 @@ function GateControl({ mode }: IGateControlProps) {
     exportPeopleToExcel(filteredData, location, actionsData ?? []);
   };
 
+  const handleActionComplete = () => {
+    onSearchChange?.("");
+    searchRef.current?.focus();
+  };
+
   return (
     <div className="gate-control">
-      <Search
-        value={searchValue}
-        onChange={(e) => setSearchValue(e.target.value)}
-        placeholder="הכנס מספר אישי"
-        maxLength={7}
-      />
+      {mode === "action" && (
+        <Search
+          ref={searchRef}
+          value={searchValue}
+          onChange={(e) => onSearchChange?.(e.target.value)}
+          placeholder="הכנס מספר אישי / ת.ז"
+          maxLength={7}
+          inputMode="numeric"
+          pattern="[0-9]*"
+        />
+      )}
 
       {mode === "status" && (
         <div className="gate-control__toolbar">
@@ -93,7 +105,12 @@ function GateControl({ mode }: IGateControlProps) {
           filteredData
             .slice(0, 20)
             .map((person) => (
-              <PersonItem key={person.ID} person={person} mode={mode} />
+              <PersonItem
+                key={person.ID}
+                person={person}
+                mode={mode}
+                onActionComplete={handleActionComplete}
+              />
             ))
         ) : (
           <div className="gate-control__no-data">

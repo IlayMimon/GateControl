@@ -11,6 +11,7 @@ import { useGateControlContext } from "../context/GateControlContext";
 interface IPersonItemProps {
   person: Person;
   mode: "action" | "status";
+  onActionComplete?: () => void;
 }
 
 export const toastConfig: ToastOptions = {
@@ -25,7 +26,7 @@ export const toastConfig: ToastOptions = {
   className: "toast-notification",
 };
 
-function PersonItem({ person, mode }: IPersonItemProps) {
+function PersonItem({ person, mode, onActionComplete }: IPersonItemProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [branch, setBranch] = useState<number | undefined>(person.Branch?.id);
   const [searchParams] = useSearchParams();
@@ -71,6 +72,7 @@ function PersonItem({ person, mode }: IPersonItemProps) {
           ];
         });
         toast.success("פעולה בוצעה בהצלחה", toastConfig);
+        onActionComplete?.();
       }
 
       setIsLoading(false);
