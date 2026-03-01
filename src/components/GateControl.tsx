@@ -1,11 +1,14 @@
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import { Input } from "antd";
+import { Button, Input, Select } from "antd";
 import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import NoDataPicture from "../assets/pictures/no-data.png";
 import { useGateControlContext } from "../context/GateControlContext";
+import useGetActions from "../hooks/data/useGetActions";
+import { exportPeopleToExcel } from "../functions/exportToExcel";
 import PersonItem from "./PersonItem";
 import { AddPersonForm } from "./AddPersonForm";
+import { IoDownloadOutline } from "react-icons/io5";
 
 const { Search } = Input;
 
@@ -17,6 +20,7 @@ function GateControl({ mode }: IGateControlProps) {
   const { peopleData, peopleIsLoading } = useGateControlContext();
   const [searchValue, setSearchValue] = useState<string | undefined>();
   const [addingPerson, setAddingPerson] = useState<boolean>(false);
+  const [wingFilter, setWingFilter] = useState<string | undefined>();
   const [searchParams] = useSearchParams();
   //TODO fix location logic in multiple places, maybe move it to context or create a custom hook for it
   let location = searchParams.get("location");
@@ -24,6 +28,8 @@ function GateControl({ mode }: IGateControlProps) {
     location = "גני יעלים";
   }
   const { branches } = useGateControlContext();
+  const { data: actionsData } = useGetActions(true);
+
   const filteredData = useMemo(() => {
     let data =
       mode === "status" && location
@@ -34,8 +40,17 @@ function GateControl({ mode }: IGateControlProps) {
       data = data?.filter((person) => person.ArmyId.includes(searchValue));
     }
 
+    if (mode === "status" && wingFilter) {
+      data = data?.filter((person) => person.Branch?.Title === wingFilter);
+    }
+
     return data;
-  }, [mode, location, peopleData, searchValue]);
+  }, [mode, location, peopleData, searchValue, wingFilter]);
+
+  const handleExport = () => {
+    if (!filteredData || !location) return;
+    exportPeopleToExcel(filteredData, location, actionsData ?? []);
+  };
 
   return (
     <div className="gate-control">
@@ -45,6 +60,26 @@ function GateControl({ mode }: IGateControlProps) {
         placeholder="הכנס מספר אישי"
         maxLength={7}
       />
+
+      {mode === "status" && (
+        <div className="gate-control__toolbar">
+          <Select
+            allowClear
+            placeholder="סנן לפי אגף"
+            onChange={(val: string | undefined) => setWingFilter(val)}
+            options={branches?.map((b) => ({ value: b.Title, label: b.Title }))}
+            className="gate-control__wing-filter"
+          />
+          <Button
+            className="gate-control__export-btn"
+            onClick={handleExport}
+            icon={<IoDownloadOutline />}
+          >
+            יצוא לאקסל
+          </Button>
+        </div>
+      )}
+
       <div className="gate-control__list">
         {peopleIsLoading ? (
           <div className="gate-control__loading">

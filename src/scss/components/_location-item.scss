@@ -2,17 +2,25 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 
   padding: 10px;
   height: 10rem;
   width: 30rem;
-  border: var(--Border);
-  background-color: #484c5d;
-  color: rgb(240, 240, 240);
-  border-radius: 10px;
+
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06), var(--glass-inner);
+
+  color: var(--text-primary);
   font-size: 3.5rem;
-  transition: 0.15s ease-in-out;
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+
   &:hover {
-    background-color: #595e72;
+    background: rgba(255, 255, 255, 0.88);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.10), var(--glass-inner);
   }
 }

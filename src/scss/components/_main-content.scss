@@ -1,4 +1,16 @@
-.main-content{
-    display: flex;
-    gap: 5rem;
+.main-content {
+  display: flex;
+  gap: 5rem;
+  width: 100%;
+  justify-content: center;
+}
+
+// Stack boxes when viewport is too narrow to show them side by side
+// Two 50rem (500px) boxes + 5rem (50px) gap = 1050px minimum
+@media (max-width: 1050px) {
+  .main-content {
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+  }
 }

@@ -18,7 +18,7 @@ body {
 
   --Success-color-success-bg: #f6ffed;
   --Warning-color-warning-bg: #fffbe6;
-  --Border-color-border: rgba(255, 255, 255, 0.2);
+  --Border-color-border: rgba(0, 0, 0, 0.07);
   --Border-color-border-secondary: #f0f0f0;
   --Border: 1px solid var(--Border-color-border);
   --Border-secondary: 1px solid var(--Border-color-border-secondary);
@@ -28,6 +28,20 @@ body {
   --Background-color-bg-text-active: rgba(0, 0, 0, 0.15);
   --control-item-bg-active: #e6f4ff;
 
-  --Scroll-thubm-color: #888;
-  --Scroll-thubm-color-hover: #555;
+  --Scroll-thubm-color: rgba(0, 0, 0, 0.18);
+  --Scroll-thubm-color-hover: rgba(0, 0, 0, 0.32);
+
+  /* === Glass Design Tokens (Light Mode) === */
+  --glass-bg: rgba(255, 255, 255, 0.72);
+  --glass-bg-blue: rgba(255, 255, 255, 0.65);
+  --glass-bg-row: rgba(255, 255, 255, 0.55);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-shadow: 0 4px 24px rgba(0, 0, 0, 0.07), 0 1px 4px rgba(0, 0, 0, 0.04);
+  --glass-inner: inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  --accent-blue: #007AFF;
+  --accent-blue-glow: rgba(0, 122, 255, 0.18);
+  --ios-green: #34c759;
+  --ios-red: #ff3b30;
+  --text-primary: rgba(0, 0, 0, 0.85);
+  --text-secondary: rgba(0, 0, 0, 0.45);
 }

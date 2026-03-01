@@ -1,4 +1,16 @@
 .kpies {
   display: flex;
-  gap: 10rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+}
+
+// Desktop: single row, centered
+@media (min-width: 769px) {
+  .kpies {
+    gap: 3rem;
+    flex-wrap: nowrap;
+    justify-content: center;
+  }
 }
