@@ -3,47 +3,126 @@
   justify-content: space-between;
   align-items: center;
   gap: 2rem;
-  background-color: rgba(255, 255, 255, 0.15);
+  background: var(--glass-bg-row);
   padding: 1.5rem;
   width: 100%;
-  color: rgb(220, 220, 220);
+  color: var(--text-primary);
   font-size: 2rem;
-  border: var(--Border);
-  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
 
   &__right {
+    flex: 1;
+    min-width: 0;
+
     &__title {
       display: flex;
       gap: 0.5rem;
+      flex-wrap: wrap;
+
       &__name {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        max-width: 10rem;
+        max-width: 18rem;
+        font-weight: 500;
       }
+
+      &__army-id {
+        color: var(--text-secondary);
+        font-weight: 300;
+      }
+    }
+  }
+
+  &__subtitle {
+    margin-top: 0.3rem;
+    font-size: 1.6rem;
+    color: var(--text-secondary);
+
+    &__branch {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  }
+
+  &__status {
+    &__text {
+      color: #1a9940;
+      font-size: 1.5rem;
+      font-weight: 500;
+      background: rgba(52, 199, 89, 0.10);
+      padding: 0.4rem 1.2rem;
+      border-radius: 20px;
+      border: 1px solid rgba(52, 199, 89, 0.22);
+      white-space: nowrap;
     }
   }
 
   &__left {
     display: flex;
     gap: 1rem;
+    flex-shrink: 0;
 
     &__exit-button,
     &__enter-button {
       border: none;
+      border-radius: 10px;
+      font-weight: 500;
     }
 
     &__exit-button {
-      background-color: #dd524c;
+      background: linear-gradient(135deg, var(--ios-red), #d9291f);
       color: white;
+
+      &:hover {
+        background: linear-gradient(135deg, #ff5547, var(--ios-red));
+      }
     }
 
     &__enter-button {
-      background-color: #4ca154;
+      background: linear-gradient(135deg, var(--ios-green), #28a745);
       color: white;
+
+      &:hover {
+        background: linear-gradient(135deg, #48d968, var(--ios-green));
+      }
     }
   }
 }
+
 .toast-notification {
   font-size: 2rem;
+}
+
+// Mobile: stack name/info above buttons
+@media (max-width: 480px) {
+  .person-item {
+    flex-wrap: wrap;
+    font-size: 1.6rem;
+    gap: 1rem;
+    padding: 1rem;
+
+    &__right {
+      width: 100%;
+
+      &__title {
+        &__name {
+          max-width: 100%;
+        }
+      }
+    }
+
+    &__left {
+      width: 100%;
+      justify-content: flex-end;
+    }
+  }
 }
