@@ -22,6 +22,7 @@ function GateControl({ mode, searchValue, onSearchChange }: IGateControlProps) {
   const { peopleData, peopleIsLoading } = useGateControlContext();
   const [addingPerson, setAddingPerson] = useState<boolean>(false);
   const [wingFilter, setWingFilter] = useState<string | undefined>();
+  const [initialArmyId, setInitialArmyId] = useState<string | undefined>();
   const searchRef = useRef<InputRef>(null);
   const [searchParams] = useSearchParams();
   //TODO fix location logic in multiple places, maybe move it to context or create a custom hook for it
@@ -67,7 +68,7 @@ function GateControl({ mode, searchValue, onSearchChange }: IGateControlProps) {
           value={searchValue}
           onChange={(e) => onSearchChange?.(e.target.value)}
           placeholder="הכנס מספר אישי / ת.ז"
-          maxLength={7}
+          maxLength={9}
           inputMode="numeric"
           pattern="[0-9]*"
         />
@@ -122,7 +123,10 @@ function GateControl({ mode, searchValue, onSearchChange }: IGateControlProps) {
                   <div className="gate-control__no-data-action">
                     <button
                       className="gate-control__no-data-button"
-                      onClick={() => setAddingPerson(true)}
+                      onClick={() => {
+                        setInitialArmyId(searchValue);
+                        setAddingPerson(true);
+                      }}
                     >
                       להוספה לחצ/י
                     </button>
@@ -133,6 +137,7 @@ function GateControl({ mode, searchValue, onSearchChange }: IGateControlProps) {
               <AddPersonForm
                 branches={branches || []}
                 onCancel={() => setAddingPerson(false)}
+                initialArmyId={initialArmyId}
               />
             )}
           </div>

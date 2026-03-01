@@ -10,9 +10,10 @@ import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 interface IAddPersonFormProps {
   branches: Branch[];
   onCancel: () => void;
+  initialArmyId?: string;
 }
 
-export function AddPersonForm({ branches, onCancel }: IAddPersonFormProps) {
+export function AddPersonForm({ branches, onCancel, initialArmyId }: IAddPersonFormProps) {
   const { setPeopleData } = useGateControlContext();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -25,6 +26,7 @@ export function AddPersonForm({ branches, onCancel }: IAddPersonFormProps) {
   ) : (
     <Form
       layout="vertical"
+      initialValues={{ armyId: initialArmyId }}
       onFinish={async (values: {
         firstName: string;
         lastName: string;
@@ -81,10 +83,10 @@ export function AddPersonForm({ branches, onCancel }: IAddPersonFormProps) {
         name="armyId"
         rules={[
           { required: true, message: "נא הכנס מספר אישי" },
-          { pattern: /^\d{7}$/, message: "מספר אישי חייב להיות בדיוק 7 ספרות" },
+          { pattern: /^\d{7,9}$/, message: "מספר אישי / ת.ז חייב להיות בין 7 ל-9 ספרות" },
         ]}
       >
-        <Input placeholder="מספר אישי" maxLength={7} />
+        <Input placeholder="מספר אישי / ת.ז" maxLength={9} />
       </Form.Item>
 
       <Form.Item
