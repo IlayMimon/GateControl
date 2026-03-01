@@ -12,7 +12,7 @@
   &__back-btn {
     position: fixed;
     top: 2rem;
-    right: 2rem;
+    left: 2rem;
     z-index: 100;
 
     background: rgba(0, 122, 255, 0.08);
@@ -52,7 +52,7 @@
 
     &__back-btn {
       top: 1.2rem;
-      right: 1.2rem;
+      left: 1.2rem;
       font-size: 1.6rem;
       padding: 0.6rem 1.5rem;
     }
