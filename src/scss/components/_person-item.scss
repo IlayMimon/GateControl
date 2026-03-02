@@ -20,6 +20,23 @@
   &__right {
     flex: 1;
     min-width: 0;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.15s ease;
+    padding: 0.4rem 0.6rem;
+    margin: -0.4rem -0.6rem;
+
+    &:hover {
+      background: rgba(0, 122, 255, 0.04);
+    }
+
+    &--editing {
+      cursor: default;
+
+      &:hover {
+        background: transparent;
+      }
+    }
 
     &__title {
       display: flex;
@@ -50,7 +67,47 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
+
+      &--empty {
+        color: rgba(0, 122, 255, 0.7);
+        font-style: italic;
+      }
     }
+  }
+
+  &__edit-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  &__edit-select {
+    flex: 1;
+    min-width: 12rem;
+    font-size: 1.4rem;
+  }
+
+  &__save-btn {
+    background: rgba(52, 199, 89, 0.12);
+    border: 1px solid rgba(52, 199, 89, 0.35);
+    color: #1a9940;
+    font-size: 1.3rem;
+    font-weight: 600;
+    border-radius: 7px;
+
+    &:hover {
+      background: rgba(52, 199, 89, 0.22) !important;
+      border-color: rgba(52, 199, 89, 0.5) !important;
+      color: #1a9940 !important;
+    }
+  }
+
+  &__cancel-btn {
+    font-size: 1.3rem;
+    border-radius: 7px;
+    color: var(--text-secondary);
   }
 
   &__status {
