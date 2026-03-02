@@ -2,8 +2,18 @@
   display: flex;
   gap: 5rem;
 }
-@media (max-width: 684px) {
+
+@media (max-width: 1050px) {
   .location-selector {
     flex-direction: column;
+    align-items: stretch;
+    gap: 2rem;
+    width: 80%;
+  }
+}
+
+@media (max-width: 480px) {
+  .location-selector {
+    gap: 1.5rem;
   }
 }

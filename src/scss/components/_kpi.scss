@@ -14,20 +14,26 @@
   display: flex;
   gap: 1.2rem;
   align-items: center;
-  transition: background 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    background 0.2s ease,
+    box-shadow 0.2s ease;
 
   &:hover {
     background: rgba(255, 255, 255, 0.88);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.10), var(--glass-inner);
+    box-shadow:
+      0 8px 30px rgba(0, 0, 0, 0.1),
+      var(--glass-inner);
   }
 
   &__title {
     font-weight: 400;
     color: var(--text-primary);
-
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     &--value {
       font-weight: 700;
-      color: rgba(0, 0, 0, 0.90);
+      color: rgba(0, 0, 0, 0.9);
     }
   }
 
