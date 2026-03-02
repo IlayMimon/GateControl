@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 type SPPageResponse<T> = {
   d: {
@@ -17,7 +17,7 @@ const fetchAllSharePointPages = async <T>(firstPageUrl: string): Promise<T[]> =>
   let nextUrl: string | undefined = firstPageUrl;
 
   while (nextUrl) {
-    const response = await axios.get<SPPageResponse<T>>(nextUrl, {
+    const response: AxiosResponse<SPPageResponse<T>> = await axios.get<SPPageResponse<T>>(nextUrl, {
       headers: { Accept: "application/json;odata=verbose" },
     });
     const { results, __next } = response.data.d;
