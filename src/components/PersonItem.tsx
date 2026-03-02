@@ -29,8 +29,8 @@ export const toastConfig: ToastOptions = {
 function PersonItem({ person, mode, onActionComplete }: IPersonItemProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [editBranch, setEditBranch] = useState<number | undefined>(
-    person.Branch?.id,
+  const [editBranch, setEditBranch] = useState<string | undefined>(
+    person.Branch?.Title,
   );
   const [isSaving, setIsSaving] = useState(false);
 
@@ -98,13 +98,14 @@ function PersonItem({ person, mode, onActionComplete }: IPersonItemProps) {
     setIsEditing(true);
     setEditName(`${person?.Title} ${person?.LastName || ''}`.trim());
     setEditArmyId(person.ArmyId);
-    setEditBranch(person.Branch?.id);
+    setEditBranch(person.Branch?.Title);
   };
 
   // Saves branch + any staged name/armyId changes in one PATCH
   const handleSaveAll = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (editBranch === undefined) {
+    const selectedBranch = branches?.find((b) => b.Title === editBranch);
+    if (!selectedBranch) {
       toast.error('יש לבחור אגף', toastConfig);
       return;
     }
@@ -115,7 +116,7 @@ function PersonItem({ person, mode, onActionComplete }: IPersonItemProps) {
       const nameChanged = editName.trim() !== originalName;
       const armyIdChanged = editArmyId.trim() !== person.ArmyId;
 
-      const body: Record<string, unknown> = { BranchId: editBranch };
+      const body: Record<string, unknown> = { BranchId: selectedBranch.ID };
 
       if (nameChanged) {
         const spaceIdx = editName.trim().indexOf(' ');
@@ -133,14 +134,12 @@ function PersonItem({ person, mode, onActionComplete }: IPersonItemProps) {
       const response = await patchItemInList('People', body, person.ID, '*');
 
       if (response.status === 204) {
-        const branchTitle =
-          branches?.find((b) => b.ID === editBranch)?.Title ?? '';
         setPeopleData((prev) =>
           prev.map((p) => {
             if (p.ID !== person.ID) return p;
             return {
               ...p,
-              Branch: { id: editBranch, Title: branchTitle },
+              Branch: { id: selectedBranch.ID, Title: selectedBranch.Title },
               ...(nameChanged && {
                 Title: body.Title as string,
                 LastName: body.LastName as string,
@@ -163,6 +162,7 @@ function PersonItem({ person, mode, onActionComplete }: IPersonItemProps) {
 
   const handleCancelEdit = (e: React.MouseEvent) => {
     e.stopPropagation();
+    setEditBranch(person.Branch?.Title);
     setEditingField(null);
     setIsEditing(false);
   };
@@ -259,14 +259,14 @@ function PersonItem({ person, mode, onActionComplete }: IPersonItemProps) {
             <Select
               showSearch
               value={editBranch}
-              placeholder="בחר אגף"
-              onChange={(val: number) => setEditBranch(val)}
+              placeholder={person.Branch?.Title ?? 'בחר אגף'}
+              onChange={(val: string) => setEditBranch(val)}
               filterOption={(input, option) =>
                 (option?.label ?? '')
                   .toLowerCase()
                   .includes(input.toLowerCase())
               }
-              options={branches?.map((b) => ({ value: b.ID, label: b.Title }))}
+              options={branches?.map((b) => ({ value: b.Title, label: b.Title }))}
               className="person-item__edit-select"
             />
             <Button
