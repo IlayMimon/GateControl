@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  gap: 1rem;
+  gap: 0.8rem;
   width: 100%;
   flex: 1;
   min-height: 0;
@@ -36,18 +36,12 @@
   }
 }
 
-// Tablet & below — revert to natural flow
-@media (max-width: 1050px) {
+// Phone — revert to natural flow
+@media (max-width: 480px) {
   .home-page-body {
     flex: none;
     min-height: unset;
     overflow: visible;
-  }
-}
-
-// Mobile
-@media (max-width: 480px) {
-  .home-page-body {
     gap: 2rem;
 
     &__back-btn {

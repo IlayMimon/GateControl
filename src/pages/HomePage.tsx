@@ -11,10 +11,6 @@ function HomePage() {
 
   return (
     <div className="home-page">
-      <div className="home-page__credit">
-        <img src={BiLogo} alt="BI Logo" className="home-page__credit-logo" />
-        <span>פותח ע״י פלוגת BI DATA גדוד 373</span>
-      </div>
       <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -38,6 +34,10 @@ function HomePage() {
         ) : (
           <LocationSelector titles={['פד"ם', "מצודת האבות", "באזל"]} />
         )}
+      </div>
+      <div className="home-page__credit">
+        <img src={BiLogo} alt="BI Logo" className="home-page__credit-logo" />
+        <span>פותח ע״י פלוגת BI DATA גדוד 373</span>
       </div>
     </div>
   );

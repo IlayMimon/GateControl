@@ -2,6 +2,7 @@ import { useSearchParams } from 'react-router-dom';
 import KPIES from './KPIES';
 import MainContent from './MainContent';
 import Button from 'antd/es/button';
+import { IoArrowBack, IoArrowForward } from 'react-icons/io5';
 
 function HomePageBody() {
   const [, setSearchParams] = useSearchParams();
@@ -17,6 +18,8 @@ function HomePageBody() {
       <Button
         className="home-page-body__back-btn"
         onClick={handleClearLocation}
+        icon={<IoArrowBack />}
+        iconPosition="end"
       >
         חזור
       </Button>

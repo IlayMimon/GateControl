@@ -5,6 +5,10 @@ import App from "./App.tsx";
 import axios from "axios";
 import QueryProvider from "./components/QueryProvider.tsx";
 import { GateControProvider } from "./context/GateControlContext.tsx";
+import { registerSW } from "virtual:pwa-register";
+
+// Silently auto-update the service worker in the background
+registerSW({ immediate: true });
 
 if (import.meta.env.PROD) {
   axios.defaults.baseURL = window.location.pathname.split("/", 3).join("/");
