@@ -2,7 +2,7 @@ import { useSearchParams } from 'react-router-dom';
 import KPIES from './KPIES';
 import MainContent from './MainContent';
 import Button from 'antd/es/button';
-import { IoArrowBack, IoArrowForward } from 'react-icons/io5';
+import { IoArrowBack } from 'react-icons/io5';
 
 function HomePageBody() {
   const [, setSearchParams] = useSearchParams();
