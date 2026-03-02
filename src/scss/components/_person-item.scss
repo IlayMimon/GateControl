@@ -10,7 +10,9 @@
   font-size: 2rem;
   border: 1px solid rgba(0, 0, 0, 0.05);
   border-radius: 12px;
-  transition: background 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    background 0.15s ease,
+    box-shadow 0.15s ease;
 
   &:hover {
     background: rgba(255, 255, 255, 0.85);
@@ -23,8 +25,6 @@
     cursor: pointer;
     border-radius: 8px;
     transition: background 0.15s ease;
-    padding: 0.4rem 0.6rem;
-    margin: -0.4rem -0.6rem;
 
     &:hover {
       background: rgba(0, 122, 255, 0.04);
@@ -115,7 +115,7 @@
       color: #1a9940;
       font-size: 1.5rem;
       font-weight: 500;
-      background: rgba(52, 199, 89, 0.10);
+      background: rgba(52, 199, 89, 0.1);
       padding: 0.4rem 1.2rem;
       border-radius: 20px;
       border: 1px solid rgba(52, 199, 89, 0.22);
