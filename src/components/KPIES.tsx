@@ -14,6 +14,7 @@ function KPIES() {
   }
 
   const { data: actionsData } = useGetActions(true);
+  console.log(actionsData);
   const { peopleData } = useGateControlContext();
 
   return location ? (
