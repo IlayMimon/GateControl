@@ -25,6 +25,8 @@ PublicKeyToken=71e9bce111e9429c" %>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gate Control</title>
+    <link rel="icon" type="image/png" href="/sites/PDM_Entry/PDM_Entry_App/${assetsFolder}/app-logo.png" />
+    <link rel="apple-touch-icon" href="/sites/PDM_Entry/PDM_Entry_App/${assetsFolder}/app-logo.png" />
     <script
       type="module"
       crossorigin
@@ -63,6 +65,11 @@ function generateSharePointAspx(): Plugin {
   return {
     name: 'generate-sharepoint-aspx',
     generateBundle() {
+      this.emitFile({
+        type: 'asset',
+        fileName: `${buildAssetsPath}/app-logo.png`,
+        source: readFileSync('./public/app-logo.png'),
+      });
       this.emitFile({ type: 'asset', fileName: 'index.aspx', source: aspxContent });
     },
   };
