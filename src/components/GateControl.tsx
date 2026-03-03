@@ -8,7 +8,7 @@ import useGetActions from "../hooks/data/useGetActions";
 import { exportPeopleToExcel } from "../functions/exportToExcel";
 import PersonItem from "./PersonItem";
 import { AddPersonForm } from "./AddPersonForm";
-import { IoDownloadOutline } from "react-icons/io5";
+import { IoDownloadOutline, IoClose } from "react-icons/io5";
 
 const { Search } = Input;
 
@@ -77,12 +77,21 @@ function GateControl({ mode, searchValue, onSearchChange }: IGateControlProps) {
       {mode === "status" && (
         <div className="gate-control__toolbar">
           <Select
-            allowClear
+            value={wingFilter}
             placeholder="סנן לפי אגף"
             onChange={(val: string | undefined) => setWingFilter(val)}
             options={branches?.map((b) => ({ value: b.Title, label: b.Title }))}
             className="gate-control__wing-filter"
           />
+          {wingFilter && (
+            <button
+              className="gate-control__filter-clear-btn"
+              onClick={() => setWingFilter(undefined)}
+            >
+              <IoClose />
+              נקה
+            </button>
+          )}
           <Button
             className="gate-control__export-btn"
             onClick={handleExport}

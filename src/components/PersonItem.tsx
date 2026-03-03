@@ -266,7 +266,10 @@ function PersonItem({ person, mode, onActionComplete }: IPersonItemProps) {
                   .toLowerCase()
                   .includes(input.toLowerCase())
               }
-              options={branches?.map((b) => ({ value: b.Title, label: b.Title }))}
+              options={branches?.map((b) => ({
+                value: b.Title,
+                label: b.Title,
+              }))}
               className="person-item__edit-select"
             />
             <Button
@@ -310,7 +313,7 @@ function PersonItem({ person, mode, onActionComplete }: IPersonItemProps) {
           <Button
             className="person-item__left__enter-button"
             onClick={() => handleClick('inbound')}
-            disabled={isLoading}
+            disabled={isLoading || person?.Location !== 'לא נמצא'}
           >
             <IoPersonAdd style={{ marginLeft: '2px' }} />
             כניסה
@@ -318,7 +321,7 @@ function PersonItem({ person, mode, onActionComplete }: IPersonItemProps) {
           <Button
             className="person-item__left__exit-button"
             onClick={() => handleClick('outbound')}
-            disabled={isLoading}
+            disabled={isLoading || person?.Location === 'לא נמצא'}
           >
             <IoPersonRemove style={{ marginLeft: '2px' }} />
             יציאה
