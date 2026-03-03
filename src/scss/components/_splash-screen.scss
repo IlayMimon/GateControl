@@ -1,0 +1,48 @@
+.splash-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: #eef2f8;
+  opacity: 1;
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s ease;
+
+  &--title {
+    margin-top: 1.5rem;
+    font-size: 3.75rem;
+    font-weight: 600;
+    color: #007aff;
+  }
+  &--subtitle {
+    margin-top: 1.25rem;
+    font-size: 2.125rem;
+    color: #555;
+  }
+  &--hiding {
+    opacity: 0;
+    transform: scale(1.04);
+    pointer-events: none;
+  }
+
+  &__logo {
+    width: 15rem;
+    height: 15rem;
+    object-fit: contain;
+    animation: splash-spin 3s linear infinite;
+    filter: drop-shadow(0 6px 24px rgba(0, 122, 255, 0.2));
+  }
+}
+
+@keyframes splash-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
