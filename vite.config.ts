@@ -1,13 +1,78 @@
-import { defineConfig } from 'vite';
+import { defineConfig, Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
+import { readFileSync } from 'fs';
 
-const buildAssetsPath = 'sites/PDM_Entry/PDM_Entry_App/assets';
+const { version } = JSON.parse(readFileSync('./package.json', 'utf-8')) as {
+  version: string;
+};
+const assetsFolder = `assets${version}`;
+const buildAssetsPath = `sites/PDM_Entry/PDM_Entry_App/${assetsFolder}`;
+
+const aspxContent = `<!doctype html>
+<%@ Register Tagprefix="SharePoint" Namespace="Microsoft.SharePoint.WebControls"
+Assembly="Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral,
+PublicKeyToken=71e9bce111e9429c" %>
+<html
+  lang="en"
+  xmlns:mso="urn:schemas-microsoft-com:office:office"
+  xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+>
+  <%@ Register Tagprefix="SharePoint"
+  Namespace="Microsoft.SharePoint.WebControls" Assembly="Microsoft.SharePoint,
+  Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gate Control</title>
+    <script
+      type="module"
+      crossorigin
+      src="/sites/PDM_Entry/PDM_Entry_App/${assetsFolder}/index.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      crossorigin
+      href="/sites/PDM_Entry/PDM_Entry_App/${assetsFolder}/index.css"
+    />
+
+    <!--[if gte mso 9
+      ]><SharePoint:CTFieldRefs
+        runat="server"
+        Prefix="mso:"
+        FieldList="FileLeafRef"
+        ><xml>
+          <mso:CustomDocumentProperties>
+            <mso:MediaServiceImageTags
+              msdt:dt="string"
+            ></mso:MediaServiceImageTags>
+            <mso:lcf76f155ced4ddcb4097134ff3c332f
+              msdt:dt="string"
+            ></mso:lcf76f155ced4ddcb4097134ff3c332f>
+            <mso:TaxCatchAll msdt:dt="string"></mso:TaxCatchAll>
+          </mso:CustomDocumentProperties> </xml></SharePoint:CTFieldRefs
+    ><![endif]-->
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
+`;
+
+function generateSharePointAspx(): Plugin {
+  return {
+    name: 'generate-sharepoint-aspx',
+    generateBundle() {
+      this.emitFile({ type: 'asset', fileName: 'index.aspx', source: aspxContent });
+    },
+  };
+}
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react(),
+    generateSharePointAspx(),
     VitePWA({
       registerType: 'autoUpdate',
       // Service worker file ends up at the dist root so SharePoint can serve it
@@ -60,14 +125,9 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        entryFileNames: `${buildAssetsPath}/index.[hash].js`,
-        chunkFileNames: `${buildAssetsPath}/[name].[hash].js`,
-        assetFileNames: (file) => {
-          // file.name is deprecated but I don't care for now. FIX LATER - idan
-          return file.name === 'index.css'
-            ? `${buildAssetsPath}/[name].[ext]`
-            : `${buildAssetsPath}/[name]-[hash].[ext]`;
-        },
+        entryFileNames: `${buildAssetsPath}/index.js`,
+        chunkFileNames: `${buildAssetsPath}/[name].js`,
+        assetFileNames: `${buildAssetsPath}/[name].[ext]`,
       },
     },
   },
