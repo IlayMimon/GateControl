@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import HomePageBody from "../components/HomePageBody";
 import { ToastContainer } from "react-toastify";
 import LocationSelector from "../components/LocationSelector";
@@ -8,6 +8,7 @@ import BiLogo from "../assets/pictures/bi-logo.png";
 function HomePage() {
   const [searchParams] = useSearchParams();
   const location = searchParams.get("location");
+  const navigate = useNavigate();
 
   return (
     <div className="home-page">
@@ -32,7 +33,30 @@ function HomePage() {
         {location ? (
           <HomePageBody />
         ) : (
-          <LocationSelector titles={['פד"ם', "מצודת האבות", "באזל"]} />
+          <div className="home-page__location-wrap">
+            <LocationSelector titles={['פד"ם', "מצודת האבות", "באזל"]} />
+            <button
+              className="home-page__dashboard-btn"
+              onClick={() => navigate("/dashboard")}
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <rect x="3" y="3" width="7" height="7" rx="1" />
+                <rect x="14" y="3" width="7" height="7" rx="1" />
+                <rect x="3" y="14" width="7" height="7" rx="1" />
+                <rect x="14" y="14" width="7" height="7" rx="1" />
+              </svg>
+              <span>דאשבורד</span>
+            </button>
+          </div>
         )}
       </div>
       <div className="home-page__credit">

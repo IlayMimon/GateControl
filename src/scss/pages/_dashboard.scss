@@ -1,0 +1,335 @@
+.dashboard-page {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1.6rem;
+  min-height: 100dvh;
+  padding: 1.6rem 2.4rem 2.4rem;
+  background:
+    radial-gradient(
+      ellipse 70% 40% at 50% -5%,
+      rgba(0, 122, 255, 0.07) 0%,
+      transparent 55%
+    ),
+    linear-gradient(180deg, #eef2f8 0%, #e8edf5 100%);
+  overflow-y: auto;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  &__header-spacer {
+    // mirrors the width of the back button so the title stays centered
+    min-width: 9rem;
+  }
+
+  &__title {
+    flex: 1;
+    text-align: center;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+  }
+
+  &__back {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.4rem;
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    color: var(--accent-blue);
+    font-size: 1.5rem;
+    font-weight: 500;
+    font-family: Rubik, sans-serif;
+    cursor: pointer;
+    transition: background 0.18s, box-shadow 0.18s;
+    white-space: nowrap;
+    box-shadow: var(--glass-shadow);
+
+    svg {
+      transform: scaleX(-1); // RTL: flip arrow to point right
+      flex-shrink: 0;
+    }
+
+    &:hover {
+      background: rgba(0, 122, 255, 0.08);
+      box-shadow: 0 4px 16px rgba(0, 122, 255, 0.12);
+    }
+  }
+
+  &__clear {
+    padding: 0.8rem 1.4rem;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 122, 255, 0.25);
+    background: rgba(0, 122, 255, 0.08);
+    color: var(--accent-blue);
+    font-size: 1.4rem;
+    font-weight: 500;
+    font-family: Rubik, sans-serif;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.18s;
+
+    &:hover {
+      background: rgba(0, 122, 255, 0.14);
+    }
+  }
+
+  &__kpis {
+    display: flex;
+    gap: 1.4rem;
+    flex-shrink: 0;
+  }
+
+  &__charts {
+    display: flex;
+    gap: 1.6rem;
+    flex: 1;
+    min-height: 0;
+  }
+}
+
+// ── KPI Card ──────────────────────────────────────────────────────────────────
+.dashboard-kpi {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  padding: 2rem 1.6rem;
+  border-radius: 18px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  box-shadow: var(--glass-shadow), var(--glass-inner);
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.15s, background 0.2s;
+  overflow: hidden;
+  text-align: center;
+  font-family: Rubik, sans-serif;
+
+  // Colored right-edge accent (start in RTL)
+  &__accent {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 5px;
+    height: 100%;
+    background: var(--kpi-color, var(--accent-blue));
+    border-radius: 0 18px 18px 0;
+  }
+
+  &__count {
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--kpi-color, var(--accent-blue));
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  &__label {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  &__sublabel {
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    margin-top: 0.1rem;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.1),
+      0 2px 8px rgba(0, 0, 0, 0.06),
+      var(--glass-inner);
+    background: rgba(255, 255, 255, 0.82);
+  }
+
+  &--active {
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow:
+      0 0 0 2px var(--kpi-color, var(--accent-blue)),
+      0 8px 32px rgba(0, 0, 0, 0.1),
+      var(--glass-inner);
+    transform: translateY(-2px);
+  }
+}
+
+// ── Chart Card ────────────────────────────────────────────────────────────────
+.dashboard-chart-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 2rem 1.2rem;
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.05),
+    var(--glass-inner);
+  min-width: 0;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+
+    h3 {
+      font-size: 1.9rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+  }
+
+  &__filter-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.3rem 1rem;
+    border-radius: 20px;
+    font-size: 1.3rem;
+    font-weight: 500;
+    font-family: Rubik, sans-serif;
+    color: var(--tag-color, var(--accent-blue));
+    background: color-mix(in srgb, var(--tag-color, var(--accent-blue)) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--tag-color, var(--accent-blue)) 25%, transparent);
+  }
+
+  &__empty {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    font-size: 1.6rem;
+    font-weight: 400;
+  }
+
+  &__hint {
+    margin-top: 0.6rem;
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    text-align: center;
+    flex-shrink: 0;
+  }
+}
+
+// ── Tablet (≤1050px) ──────────────────────────────────────────────────────────
+@media (max-width: 1050px) {
+  .dashboard-page {
+    gap: 1.2rem;
+    padding: 1.2rem 1.4rem 2rem;
+
+    &__title {
+      font-size: 2.2rem;
+    }
+
+    &__charts {
+      flex-direction: column;
+      flex: none;
+    }
+  }
+
+  .dashboard-chart-card {
+    padding: 1.6rem 1.4rem 1rem;
+  }
+}
+
+// ── Mobile (≤680px) ───────────────────────────────────────────────────────────
+@media (max-width: 680px) {
+  .dashboard-page {
+    gap: 1rem;
+    padding: 1rem 1rem 1.8rem;
+
+    &__header {
+      gap: 0.8rem;
+    }
+
+    &__title {
+      font-size: 1.8rem;
+    }
+
+    &__back-label {
+      display: none; // show only icon on small screens
+    }
+
+    &__back {
+      padding: 0.8rem 1rem;
+    }
+
+    &__clear {
+      font-size: 1.3rem;
+      padding: 0.7rem 1rem;
+    }
+
+    &__kpis {
+      gap: 0.8rem;
+    }
+
+    &__header-spacer {
+      min-width: 4rem; // smaller mirror width since back btn has no text
+    }
+  }
+
+  .dashboard-kpi {
+    padding: 1.4rem 0.6rem;
+    gap: 0.2rem;
+
+    &__count {
+      font-size: 2.8rem;
+    }
+
+    &__label {
+      font-size: 1.4rem;
+    }
+
+    &__sublabel {
+      display: none;
+    }
+  }
+
+  .dashboard-chart-card {
+    padding: 1.4rem 1rem 0.8rem;
+
+    &__header h3 {
+      font-size: 1.7rem;
+    }
+
+    &__hint {
+      font-size: 1.1rem;
+    }
+  }
+}
+
+// ── Very small (≤380px) ───────────────────────────────────────────────────────
+@media (max-width: 380px) {
+  .dashboard-kpi {
+    &__count {
+      font-size: 2.4rem;
+    }
+
+    &__label {
+      font-size: 1.3rem;
+    }
+  }
+}
