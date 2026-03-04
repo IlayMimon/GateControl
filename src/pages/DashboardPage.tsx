@@ -52,9 +52,16 @@ function DashboardPage() {
   const [activeLocation, setActiveLocation] = useState<string | null>(null);
   const [activeBranch, setActiveBranch] = useState<string | null>(null);
 
-  // Only count people assigned to a branch
+  // Only count people assigned to a branch and not "חוץ פיקוד"
   const assignedPeople = useMemo(
-    () => peopleData.filter((p) => p.Branch?.Title),
+    () =>
+      peopleData.filter(
+        (p) =>
+          p.Branch?.Title &&
+          p.Location &&
+          p.Location !== 'חוץ פיקוד' &&
+          p.Location !== 'לא נמצא',
+      ),
     [peopleData],
   );
 
