@@ -44,22 +44,32 @@
   }
 }
 
-// Tablet
-@media (max-width: 768px) {
+// Tablet — compact but stay in a single horizontal row
+@media (max-width: 1050px) {
   .kpi {
-    padding: 1.5rem 2rem;
+    padding: 1.2rem 1.5rem;
     font-size: 2rem;
-    width: 100%;
-    flex: unset;
+    min-width: 0;
     justify-content: center;
-    min-width: unset;
   }
 }
 
 // Mobile
 @media (max-width: 480px) {
   .kpi {
-    padding: 1.2rem 1.5rem;
-    font-size: 1.8rem;
+    padding: 1rem 1.2rem;
+    font-size: 1.6rem;
+  }
+}
+
+// Short viewport — keyboard open or landscape on small tablet
+@media (max-height: 550px) {
+  .kpi {
+    padding: 0.6rem 1rem;
+    font-size: 1.5rem;
+
+    &__icon {
+      font-size: 2rem;
+    }
   }
 }

@@ -4,6 +4,7 @@
   align-items: center;
   gap: 1rem;
   height: 100vh;
+  height: 100dvh; // shrinks when on-screen keyboard opens
   overflow: hidden;
   padding: 1.2rem 2rem 1rem;
   background:
@@ -72,16 +73,16 @@
 // Tablet — stacked no-scroll layout, credit becomes structural at bottom-right
 @media (max-width: 1050px) {
   .home-page {
-    gap: 0.8rem;
-    padding: 1rem 1.5rem 0.8rem;
+    gap: 0.6rem;
+    padding: 0.8rem 1.5rem 0.6rem;
 
     &__header {
       h1 {
-        font-size: 2.8rem;
+        font-size: 2.2rem;
       }
 
       h2 {
-        font-size: 1.6rem;
+        font-size: 1.4rem;
       }
     }
 
@@ -90,7 +91,7 @@
     }
 
     &__credit-logo {
-      height: 2.2rem;
+      height: 2rem;
     }
   }
 }
@@ -99,7 +100,7 @@
 @media (max-width: 480px) {
   .home-page {
     height: auto;
-    min-height: 100vh;
+    min-height: 100dvh;
     overflow: visible;
     gap: 2rem;
     padding: 1.5rem;
@@ -117,6 +118,29 @@
     &__body {
       flex: none;
       overflow: visible;
+    }
+  }
+}
+
+// Short viewport — keyboard open or landscape on small tablet
+// Compact header, tighter gaps to maximise space for the input + results
+@media (max-height: 550px) {
+  .home-page {
+    gap: 0.4rem;
+    padding: 0.6rem 1.5rem 0.4rem;
+
+    &__header {
+      h1 {
+        font-size: 2rem;
+      }
+
+      h2 {
+        display: none; // hide the date to save vertical space
+      }
+    }
+
+    &__credit {
+      display: none;
     }
   }
 }

@@ -36,6 +36,13 @@
   }
 }
 
+// Tablet — tighter gap
+@media (max-width: 1050px) {
+  .home-page-body {
+    gap: 0.5rem;
+  }
+}
+
 // Phone — revert to natural flow
 @media (max-width: 480px) {
   .home-page-body {

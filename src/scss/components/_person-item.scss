@@ -202,6 +202,29 @@
   font-size: 2rem;
 }
 
+// Tablet — compact items so at least 4 fit per list
+@media (max-width: 1050px) {
+  .person-item {
+    padding: 0.8rem 1.2rem;
+    font-size: 1.7rem;
+    gap: 1rem;
+
+    &__subtitle {
+      font-size: 1.3rem;
+      margin-top: 0.1rem;
+    }
+
+    &__left {
+      gap: 0.5rem;
+    }
+
+    &__status__text {
+      font-size: 1.3rem;
+      padding: 0.3rem 0.8rem;
+    }
+  }
+}
+
 // Mobile: stack name/info above buttons
 @media (max-width: 480px) {
   .person-item {

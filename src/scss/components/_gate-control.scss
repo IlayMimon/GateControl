@@ -159,6 +159,13 @@
     color: var(--text-secondary);
   }
 
+  @media (max-width: 1050px) {
+    &__list {
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+  }
+
   @media (max-width: 480px) {
     &__no-data {
       img {
