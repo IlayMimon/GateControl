@@ -14,7 +14,7 @@ const useGetPeople = () => {
   const { data, isLoading, refetch } = useQueryFetchRequest<
     SharepointQueryResultArray<Person>
   >(
-    "/_api/web/lists/getbytitle('People')/items?$select=ID,ArmyId,Title,LastName,Branch/Id,Branch/Title,Location&$expand=Branch"
+    "/_api/web/lists/getbytitle('People')/items?$top=5000&$select=ID,ArmyId,Title,LastName,Branch/Id,Branch/Title,Location&$expand=Branch"
   );
 
   return { data: data?.d.results, isLoading, refetch };

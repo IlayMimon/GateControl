@@ -3,7 +3,8 @@
   flex-direction: column;
   align-items: stretch;
   gap: 1.6rem;
-  min-height: 100dvh;
+  height: 100%;
+  overflow-y: auto;
   padding: 1.6rem 2.4rem 2.4rem;
   background:
     radial-gradient(
@@ -12,7 +13,6 @@
       transparent 55%
     ),
     linear-gradient(180deg, #eef2f8 0%, #e8edf5 100%);
-  overflow-y: auto;
 
   &__header {
     display: flex;
@@ -92,8 +92,6 @@
   &__charts {
     display: flex;
     gap: 1.6rem;
-    flex: 1;
-    min-height: 0;
   }
 }
 
@@ -173,6 +171,7 @@
 // ── Chart Card ────────────────────────────────────────────────────────────────
 .dashboard-chart-card {
   flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   padding: 2rem 2rem 1.2rem;
@@ -185,7 +184,6 @@
     0 12px 40px rgba(0, 0, 0, 0.08),
     0 2px 8px rgba(0, 0, 0, 0.05),
     var(--glass-inner);
-  min-width: 0;
 
   &__header {
     display: flex;
@@ -246,7 +244,6 @@
 
     &__charts {
       flex-direction: column;
-      flex: none;
     }
   }
 
