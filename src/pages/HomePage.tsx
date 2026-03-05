@@ -1,13 +1,13 @@
-import dayjs from "dayjs";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import HomePageBody from "../components/HomePageBody";
-import { ToastContainer } from "react-toastify";
-import LocationSelector from "../components/LocationSelector";
-import BiLogo from "../assets/pictures/bi-logo.png";
+import dayjs from 'dayjs';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import HomePageBody from '../components/HomePageBody';
+import { ToastContainer } from 'react-toastify';
+import LocationSelector from '../components/LocationSelector';
+import BiLogo from '../assets/pictures/bi-logo.png';
 
 function HomePage() {
   const [searchParams] = useSearchParams();
-  const location = searchParams.get("location");
+  const location = searchParams.get('location');
   const navigate = useNavigate();
 
   return (
@@ -26,7 +26,7 @@ function HomePage() {
       />
       <div className="home-page__header">
         <h1>מעקב גישה למתקן {location && ` - ${location}`}</h1>
-        <h2>{dayjs(new Date()).format("DD/MM/YYYY")}</h2>
+        <h2>{dayjs(new Date()).format('DD/MM/YYYY')}</h2>
       </div>
       <div className="home-page__body">
         {/* TODO fix location logic in multiple places, maybe move it to context or create a custom hook for it */}
@@ -34,8 +34,8 @@ function HomePage() {
           <HomePageBody />
         ) : (
           <div className="home-page__location-wrap">
-            <LocationSelector titles={['פד"ם', "מצודת האבות", "באזל"]} />
-            <button
+            <LocationSelector titles={['פד"ם', 'מצודת האבות', 'באזל']} />
+            {/* <button
               className="home-page__dashboard-btn"
               onClick={() => navigate("/dashboard")}
             >
@@ -55,7 +55,7 @@ function HomePage() {
                 <rect x="14" y="14" width="7" height="7" rx="1" />
               </svg>
               <span>דאשבורד</span>
-            </button>
+            </button> */}
           </div>
         )}
       </div>

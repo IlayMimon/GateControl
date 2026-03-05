@@ -68,7 +68,9 @@
     cursor: pointer;
     white-space: nowrap;
     box-shadow: var(--glass-shadow);
-    transition: background 0.18s, box-shadow 0.18s;
+    transition:
+      background 0.18s,
+      box-shadow 0.18s;
 
     svg {
       transform: scaleX(-1);
@@ -225,7 +227,10 @@
   cursor: pointer;
   white-space: nowrap;
   box-shadow: var(--glass-shadow);
-  transition: background 0.18s, box-shadow 0.18s, transform 0.15s;
+  transition:
+    background 0.18s,
+    box-shadow 0.18s,
+    transform 0.15s;
 
   &:hover {
     background: rgba(255, 255, 255, 0.9);
@@ -276,6 +281,22 @@
 
     &__header-spacer {
       min-width: 4rem;
+    }
+
+    &__table {
+      .ant-table,
+      .ant-table-thead > tr > th,
+      .ant-table-tbody > tr > td {
+        font-size: 1.2rem;
+      }
+
+      .ant-table-body {
+        max-height: calc(100vh - 420px) !important;
+      }
+
+      .ant-pagination {
+        font-size: 1rem;
+      }
     }
   }
 

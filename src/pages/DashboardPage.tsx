@@ -130,14 +130,14 @@ function DashboardPage() {
   return (
     <div className="dashboard-page">
       <div className="dashboard-page__header">
-        <button
+        {/* <button
           className="dashboard-page__back"
           onClick={() => navigate(-1)}
           aria-label="חזור"
         >
           <BackArrow />
           <span className="dashboard-page__back-label">חזור</span>
-        </button>
+        </button> */}
         <h1 className="dashboard-page__title">דאשבורד נוכחות</h1>
         <div className="dashboard-page__header-actions">
           {hasFilter && (
