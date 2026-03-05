@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import HomePageBody from '../components/HomePageBody';
 import { ToastContainer } from 'react-toastify';
 import LocationSelector from '../components/LocationSelector';
@@ -8,7 +8,6 @@ import BiLogo from '../assets/pictures/bi-logo.png';
 function HomePage() {
   const [searchParams] = useSearchParams();
   const location = searchParams.get('location');
-  const navigate = useNavigate();
 
   return (
     <div className="home-page">

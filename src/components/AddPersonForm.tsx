@@ -36,12 +36,12 @@ export function AddPersonForm({ branches, onCancel, initialArmyId }: IAddPersonF
         // Will only be called if all validations pass
         setIsLoading(true);
         const personResponse = await addPerson(values);
-        if (personResponse === "success") {
+        if (personResponse.status === "success") {
           // Update the people data in context or state
           setPeopleData((prevData) => {
             return [
               {
-                ID: parseInt(values.armyId), // Simulating a new ID, replace with actual ID from DB on refresh
+                ID: personResponse.id!,
                 ArmyId: values.armyId,
                 Title: values.firstName,
                 LastName: values.lastName,

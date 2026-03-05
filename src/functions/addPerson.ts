@@ -13,7 +13,11 @@ const addPerson = async (values: {
     BranchId: values.branch,
   });
 
-  return personResponse.status === 201 ? "success" : "error";
+  if (personResponse.status === 201) {
+    const newId = (personResponse.data as { d: { ID: number } }).d.ID;
+    return { status: "success", id: newId };
+  }
+  return { status: "error", id: null };
 };
 
 export default addPerson;
