@@ -259,8 +259,8 @@ function DashboardPage() {
                 <Bar
                   dataKey="count"
                   radius={[6, 6, 0, 0]}
-                  onClick={(data: { name: string }) =>
-                    handleBarClick(data.name)
+                  onClick={(data) =>
+                    handleBarClick((data as { name: string }).name)
                   }
                   cursor="pointer"
                 >
