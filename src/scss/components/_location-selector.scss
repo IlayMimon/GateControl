@@ -1,11 +1,15 @@
 .location-selector {
   display: flex;
-  gap: 5rem;
+  align-items: center;
+  gap: 3rem;
+  flex-direction: column;
+  overflow-y: scroll;
+  padding: 0 2rem;
+  width: 100%;
 }
 
 @media (max-width: 1050px) {
   .location-selector {
-    flex-direction: column;
     align-items: stretch;
     gap: 2rem;
     width: 80%;

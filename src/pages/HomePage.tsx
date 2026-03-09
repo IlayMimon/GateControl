@@ -6,19 +6,23 @@ import { ToastContainer } from 'react-toastify';
 import LocationSelector from '../components/LocationSelector';
 import BiLogo from '../assets/pictures/bi-logo.png';
 import { useUser } from '../context/UserContext';
-import { ALL_LOCATIONS, GROUP_LOCATION_MAP } from '../config/permissions';
+import useGetLocations from '../hooks/data/useGetLocations';
 
 function HomePage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const location = searchParams.get('location');
-  const { groups, isLoading } = useUser();
+  const { groups, isLoading: userLoading } = useUser();
+  const { data: locations, isLoading: locationsLoading } = useGetLocations();
 
-  // Derive the list of locations this user is permitted to see
+  const isLoading = userLoading || locationsLoading;
+
+  // Derive the list of locations this user is permitted to see.
+  // Convention: group name = location title + ' עריכה'
   const allowedLocations = isLoading
     ? []
-    : ALL_LOCATIONS.filter((loc) =>
-        groups.some((g) => GROUP_LOCATION_MAP[g.Title] === loc),
-      );
+    : locations
+        .map((l) => l.Title)
+        .filter((loc) => groups.some((g) => g.Title === `${loc} עריכה`));
 
   // If the user has access to exactly one location, go there automatically
   useEffect(() => {

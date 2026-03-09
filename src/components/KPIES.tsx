@@ -31,7 +31,6 @@ function KPIES() {
         title={'פעילות היום'}
         value={
           actionsData?.filter((action) => {
-            console.log(action.Location, Location);
             return action.Location === location;
           })?.length || 0
         }

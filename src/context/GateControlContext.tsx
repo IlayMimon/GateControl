@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import useGetPeople, { Person } from "../hooks/data/useGetPeople";
 import useGetBranch, { Branch } from "../hooks/data/useGetBranch";
+import useGetLocations, { Location } from "../hooks/data/useGetLocations";
 
 interface PeopleContextType {
   peopleData: Person[];
@@ -8,6 +9,7 @@ interface PeopleContextType {
   peopleRefetch: () => void;
   setPeopleData: React.Dispatch<React.SetStateAction<Person[]>>;
   branches?: Branch[];
+  locations: Location[];
 }
 
 const PeopleContext = createContext<PeopleContextType | undefined>(undefined);
@@ -19,6 +21,7 @@ export const GateControProvider = ({
 }) => {
   const { data: people, isLoading, refetch } = useGetPeople();
   const { data: branches } = useGetBranch();
+  const { data: locations } = useGetLocations();
   const [peopleData, setPeopleData] = useState<Person[]>([]);
 
   // Sync initial data from the hook
@@ -36,6 +39,7 @@ export const GateControProvider = ({
         peopleRefetch: refetch,
         setPeopleData,
         branches,
+        locations,
       }}
     >
       {children}
