@@ -28,6 +28,7 @@ const preformAction = async (
   personId: number,
   locationId: number | null,
   personBranch?: number,
+  notFoundLocationId?: number,
 ) => {
   const actionResponse = await addItemToList('Actions', {
     ArmyIdId: personId,
@@ -39,6 +40,7 @@ const preformAction = async (
     'People',
     {
       Location: actionType === 'inbound' ? location : 'לא נמצא',
+      BaseLocationId: actionType === 'inbound' ? locationId : (notFoundLocationId ?? 0),
       BranchId: personBranch,
     },
     personId,

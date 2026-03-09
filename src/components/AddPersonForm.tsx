@@ -5,7 +5,7 @@ import addPerson from "../functions/addPerson";
 import { Branch } from "../hooks/data/useGetBranch";
 import { toastConfig } from "./PersonItem";
 import { useState } from "react";
-import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import LoadingSpinner from "./LoadingSpinner";
 
 interface IAddPersonFormProps {
   branches: Branch[];
@@ -18,11 +18,7 @@ export function AddPersonForm({ branches, onCancel, initialArmyId }: IAddPersonF
   const [isLoading, setIsLoading] = useState(false);
 
   return isLoading ? (
-    <DotLottieReact
-      src="https://lottie.host/8026cb7a-061a-44af-948e-22d13b9e55a7/TXtEMrjcEY.lottie"
-      loop
-      autoplay
-    />
+    <LoadingSpinner />
   ) : (
     <Form
       layout="vertical"

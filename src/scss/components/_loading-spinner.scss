@@ -1,0 +1,17 @@
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2.4rem;
+  color: var(--accent-blue);
+
+  svg {
+    width: 44px;
+    height: 44px;
+    animation: spinner-rotate 0.9s linear infinite;
+  }
+}
+
+@keyframes spinner-rotate {
+  to { transform: rotate(360deg); }
+}

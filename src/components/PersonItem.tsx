@@ -45,10 +45,9 @@ function PersonItem({ person, mode, onActionComplete }: IPersonItemProps) {
   const armyIdInputRef = useRef<HTMLInputElement>(null);
 
   const [searchParams] = useSearchParams();
-  //TODO fix location logic in multiple places, maybe move it to context or create a custom hook for it
-  const tempLocation = searchParams.get('location') as 'פד"ם' | 'מצודת האבות';
-  const location = tempLocation === 'מצודת האבות' ? 'גני יעלים' : tempLocation;
-  const { branches, setPeopleData } = useGateControlContext();
+  const baseLocation = searchParams.get('location');
+  const location = baseLocation === 'מצודת האבות' ? 'גני יעלים' : baseLocation;
+  const { branches, locations, setPeopleData } = useGateControlContext();
 
   useEffect(() => {
     if (editingField === 'name' && nameInputRef.current) {
@@ -71,11 +70,21 @@ function PersonItem({ person, mode, onActionComplete }: IPersonItemProps) {
       return;
     }
 
+    if (!location) {
+      setIsLoading(false);
+      return;
+    }
+
+    const locationId = locations.find((l) => l.Title === baseLocation)?.ID ?? null;
+    const notFoundLocationId = locations.find((l) => l.Title === 'לא נמצא')?.ID ?? 0;
+
     const response = await preformAction(
       location,
       actionType,
       person.ID,
+      locationId,
       person.Branch.id,
+      notFoundLocationId,
     );
 
     if (response === 'error') {

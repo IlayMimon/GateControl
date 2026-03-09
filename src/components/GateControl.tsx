@@ -1,4 +1,4 @@
-import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import LoadingSpinner from "./LoadingSpinner";
 import { Button, Input, InputRef, Select } from "antd";
 import { useRef, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -9,6 +9,7 @@ import { exportPeopleToExcel } from "../functions/exportToExcel";
 import PersonItem from "./PersonItem";
 import { AddPersonForm } from "./AddPersonForm";
 import { IoDownloadOutline, IoClose } from "react-icons/io5";
+import { matchesLocation } from "../utils/locationUtils";
 
 const { Search } = Input;
 
@@ -25,18 +26,16 @@ function GateControl({ mode, searchValue, onSearchChange }: IGateControlProps) {
   const [initialArmyId, setInitialArmyId] = useState<string | undefined>();
   const searchRef = useRef<InputRef>(null);
   const [searchParams] = useSearchParams();
-  //TODO fix location logic in multiple places, maybe move it to context or create a custom hook for it
-  let location = searchParams.get("location");
-  if (location === "מצודת האבות") {
-    location = "גני יעלים";
-  }
+  const location = searchParams.get("location");
   const { branches } = useGateControlContext();
   const { data: actionsData } = useGetActions(true);
 
   const filteredData = useMemo(() => {
     let data =
       mode === "status" && location
-        ? peopleData?.filter((person) => person.Location === location)
+        ? peopleData?.filter((person) =>
+            matchesLocation(person.BaseLocation?.Title || person.Location, location)
+          )
         : peopleData;
 
     if (searchValue && searchValue.length > 3) {
@@ -105,11 +104,7 @@ function GateControl({ mode, searchValue, onSearchChange }: IGateControlProps) {
       <div className="gate-control__list">
         {peopleIsLoading ? (
           <div className="gate-control__loading">
-            <DotLottieReact
-              src="https://lottie.host/8026cb7a-061a-44af-948e-22d13b9e55a7/TXtEMrjcEY.lottie"
-              loop
-              autoplay
-            />
+            <LoadingSpinner />
           </div>
         ) : filteredData?.length ? (
           filteredData
