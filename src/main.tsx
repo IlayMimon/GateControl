@@ -5,6 +5,7 @@ import App from "./App.tsx";
 import axios from "axios";
 import QueryProvider from "./components/QueryProvider.tsx";
 import { GateControProvider } from "./context/GateControlContext.tsx";
+import { UserProvider } from "./context/UserContext.tsx";
 import { registerSW } from "virtual:pwa-register";
 
 // Silently auto-update the service worker in the background
@@ -25,9 +26,11 @@ axios.defaults.headers.common.Accept = "application/json;odata=verbose";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryProvider>
-      <GateControProvider>
-        <App />
-      </GateControProvider>
+      <UserProvider>
+        <GateControProvider>
+          <App />
+        </GateControProvider>
+      </UserProvider>
     </QueryProvider>
   </StrictMode>
 );

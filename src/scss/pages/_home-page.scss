@@ -79,6 +79,17 @@
     overflow: hidden;
   }
 
+  &__loading,
+  &__no-access {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    font-family: Rubik, sans-serif;
+  }
+
   // Structural — sits below __body (flex: 1 pushes it to the very bottom)
   // align-self: flex-start = RIGHT edge in RTL column flex
   &__credit {
