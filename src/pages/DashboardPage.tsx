@@ -13,11 +13,20 @@ import {
   YAxis,
 } from 'recharts';
 import { useGateControlContext } from '../context/GateControlContext';
+import { useUser } from '../context/UserContext';
+import { matchesLocation } from '../utils/locationUtils';
 
-const LOCATIONS: { key: string; label: string; color: string }[] = [
-  { key: 'פד"ם', label: 'פד"ם', color: '#fa8c16' },
-  { key: 'גני יעלים', label: 'מצודת האבות', color: '#722ed1' },
-  { key: 'באזל', label: 'באזל', color: '#13c2c2' },
+const LOCATION_COLORS = [
+  '#fa8c16',
+  '#722ed1',
+  '#13c2c2',
+  '#007AFF',
+  '#ff2d55',
+  '#34c759',
+  '#ff9f0a',
+  '#af52de',
+  '#5ac8fa',
+  '#a2845e',
 ];
 
 const BRANCH_COLORS = [
@@ -33,30 +42,47 @@ const BRANCH_COLORS = [
 
 function DashboardPage() {
   const navigate = useNavigate();
-  const { peopleData } = useGateControlContext();
+  const { peopleData, locations: allLocations } = useGateControlContext();
+  const { groups } = useUser();
   const [activeLocation, setActiveLocation] = useState<string | null>(null);
   const [activeBranch, setActiveBranch] = useState<string | null>(null);
 
-  // Only count people assigned to a branch and not "חוץ פיקוד"
+  // Only show locations the user has permission to see (same convention as HomePage)
+  const locations = useMemo(
+    () =>
+      allLocations
+        .filter((loc) => groups.some((g) => g.Title === `${loc.Title} עריכה`))
+        .map((loc, i) => ({
+          ...loc,
+          color: LOCATION_COLORS[i % LOCATION_COLORS.length],
+        })),
+    [allLocations, groups],
+  );
+
+  // Only count people assigned to a branch and currently at a location
   const assignedPeople = useMemo(
     () =>
-      peopleData.filter(
-        (p) =>
+      peopleData.filter((p) => {
+        const effectiveLoc = p.BaseLocation?.Title || p.Location;
+        return (
           p.Branch?.Title &&
-          p.Location &&
-          p.Location !== 'חוץ פיקוד' &&
-          p.Location !== 'לא נמצא',
-      ),
+          effectiveLoc &&
+          effectiveLoc !== 'חוץ פיקוד' &&
+          effectiveLoc !== 'לא נמצא'
+        );
+      }),
     [peopleData],
   );
 
   const locationCounts = useMemo(
     () =>
-      LOCATIONS.map((loc) => ({
+      locations.map((loc) => ({
         ...loc,
-        count: assignedPeople.filter((p) => p.Location === loc.key).length,
+        count: assignedPeople.filter((p) =>
+          matchesLocation(p.BaseLocation?.Title || p.Location, loc.Title),
+        ).length,
       })),
-    [assignedPeople],
+    [assignedPeople, locations],
   );
 
   // Pie data: location distribution, optionally filtered by activeBranch
@@ -64,20 +90,25 @@ function DashboardPage() {
     const source = activeBranch
       ? assignedPeople.filter((p) => p.Branch?.Title === activeBranch)
       : assignedPeople;
-    return LOCATIONS.map((loc) => ({
-      name: loc.label,
-      locationKey: loc.key,
-      value: source.filter((p) => p.Location === loc.key).length,
-      color: loc.color,
-    })).filter((d) => d.value > 0);
-  }, [assignedPeople, activeBranch]);
+    return locationCounts
+      .map((loc) => ({
+        name: loc.Title,
+        locationKey: loc.Title,
+        value: source.filter((p) =>
+          matchesLocation(p.BaseLocation?.Title || p.Location, loc.Title),
+        ).length,
+        color: loc.color,
+      }))
+      .filter((d) => d.value > 0);
+  }, [assignedPeople, activeBranch, locationCounts]);
 
   // Bar data: branch distribution, optionally filtered by activeLocation
-  // "נוכחים" = only people assigned to a location
   const barData = useMemo(() => {
     const source = activeLocation
-      ? assignedPeople.filter((p) => p.Location === activeLocation)
-      : assignedPeople.filter((p) => p.Location);
+      ? assignedPeople.filter((p) =>
+          matchesLocation(p.BaseLocation?.Title || p.Location, activeLocation),
+        )
+      : assignedPeople;
     const map = new Map<string, number>();
     source.forEach((person) => {
       const name = person.Branch!.Title;
@@ -107,22 +138,14 @@ function DashboardPage() {
     navigate(`/people?${params.toString()}`);
   };
 
-  const activeLocationLabel = LOCATIONS.find(
-    (l) => l.key === activeLocation,
-  )?.label;
+  const activeLocationColor = locations.find(
+    (l) => l.Title === activeLocation,
+  )?.color;
   const hasFilter = activeLocation !== null || activeBranch !== null;
 
   return (
     <div className="dashboard-page">
       <div className="dashboard-page__header">
-        {/* <button
-          className="dashboard-page__back"
-          onClick={() => navigate(-1)}
-          aria-label="חזור"
-        >
-          <BackArrow />
-          <span className="dashboard-page__back-label">חזור</span>
-        </button> */}
         <h1 className="dashboard-page__title">דאשבורד נוכחות</h1>
         <div className="dashboard-page__header-actions">
           {hasFilter && (
@@ -164,13 +187,13 @@ function DashboardPage() {
       <div className="dashboard-page__kpis">
         {locationCounts.map((loc) => (
           <button
-            key={loc.key}
-            className={`dashboard-kpi ${activeLocation === loc.key ? 'dashboard-kpi--active' : ''}`}
+            key={loc.Title}
+            className={`dashboard-kpi ${activeLocation === loc.Title ? 'dashboard-kpi--active' : ''}`}
             style={{ '--kpi-color': loc.color } as React.CSSProperties}
-            onClick={() => handleKpiClick(loc.key)}
+            onClick={() => handleKpiClick(loc.Title)}
           >
             <span className="dashboard-kpi__count">{loc.count}</span>
-            <span className="dashboard-kpi__label">{loc.label}</span>
+            <span className="dashboard-kpi__label">{loc.Title}</span>
             <span className="dashboard-kpi__sublabel">נמצאים במתקן</span>
             <div className="dashboard-kpi__accent" />
           </button>
@@ -183,18 +206,16 @@ function DashboardPage() {
         <div className="dashboard-chart-card">
           <div className="dashboard-chart-card__header">
             <h3>נוכחים לפי אגף</h3>
-            {activeLocationLabel && (
+            {activeLocation && (
               <span
                 className="dashboard-chart-card__filter-tag"
                 style={
                   {
-                    '--tag-color': LOCATIONS.find(
-                      (l) => l.key === activeLocation,
-                    )?.color,
+                    '--tag-color': activeLocationColor,
                   } as React.CSSProperties
                 }
               >
-                {activeLocationLabel}
+                {activeLocation}
               </span>
             )}
           </div>
