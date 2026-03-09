@@ -1,0 +1,213 @@
+// Trigger button (shown on page)
+.barcode-scanner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  flex-shrink: 0;
+
+  &__btn {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.9rem 1.8rem;
+    border-radius: 14px;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    color: var(--accent-blue);
+    font-size: 1.5rem;
+    font-weight: 500;
+    font-family: Rubik, sans-serif;
+    cursor: pointer;
+    box-shadow: var(--glass-shadow);
+    transition: background 0.18s, box-shadow 0.18s, transform 0.15s;
+
+    &:hover {
+      background: rgba(0, 122, 255, 0.08);
+      box-shadow: 0 4px 16px rgba(0, 122, 255, 0.14);
+      transform: translateY(-1px);
+    }
+
+    &--loading {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+  }
+
+  &__pulse {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent-blue);
+    animation: barcode-pulse 1.2s ease-in-out infinite;
+    margin-left: 0.4rem;
+  }
+
+  &__error {
+    font-size: 1.3rem;
+    color: var(--ios-red);
+    font-family: Rubik, sans-serif;
+    text-align: center;
+  }
+}
+
+// Full-screen scanner modal
+.bs-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+
+  &__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  // Top bar
+  &__topbar {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 1.6rem;
+    padding-top: calc(1.2rem + env(safe-area-inset-top));
+  }
+
+  &__back,
+  &__torch {
+    background: rgba(0, 0, 0, 0.45);
+    border: none;
+    color: #fff;
+    width: 4.2rem;
+    height: 4.2rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    flex-shrink: 0;
+  }
+
+  &__torch--on {
+    background: rgba(255, 214, 0, 0.85);
+    color: #000;
+  }
+
+  &__title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    font-family: Rubik, sans-serif;
+    color: #fff;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  // ── Viewfinder box ────────────────────────────────────────────────────────
+  // Wide rectangle optimised for 1-D barcodes.
+  // box-shadow creates the dark overlay around it.
+  &__finder-box {
+    position: absolute;
+    left: 50%;
+    top: 46%;
+    transform: translate(-50%, -50%);
+    width: 84%;
+    height: 160px;
+    z-index: 2;
+    pointer-events: none;
+    border-radius: 10px;
+    // Dark vignette outside the finder
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.55);
+    // Clip the scan-line animation inside
+    overflow: hidden;
+  }
+
+  $corner-size: 26px;
+  $corner-thickness: 3px;
+  $corner-color: #fff;
+
+  &__corner {
+    position: absolute;
+    width: $corner-size;
+    height: $corner-size;
+
+    &--tl {
+      top: 0; left: 0;
+      border-top:  $corner-thickness solid $corner-color;
+      border-left: $corner-thickness solid $corner-color;
+      border-radius: 6px 0 0 0;
+    }
+    &--tr {
+      top: 0; right: 0;
+      border-top:   $corner-thickness solid $corner-color;
+      border-right: $corner-thickness solid $corner-color;
+      border-radius: 0 6px 0 0;
+    }
+    &--bl {
+      bottom: 0; left: 0;
+      border-bottom: $corner-thickness solid $corner-color;
+      border-left:   $corner-thickness solid $corner-color;
+      border-radius: 0 0 0 6px;
+    }
+    &--br {
+      bottom: 0; right: 0;
+      border-bottom: $corner-thickness solid $corner-color;
+      border-right:  $corner-thickness solid $corner-color;
+      border-radius: 0 0 6px 0;
+    }
+  }
+
+  // Animated scan line
+  &__scan-line {
+    position: absolute;
+    left: 4%;
+    right: 4%;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #4eff91 30%, #4eff91 70%, transparent);
+    box-shadow: 0 0 8px 1px rgba(78, 255, 145, 0.7);
+    animation: bs-scan 2s ease-in-out infinite;
+  }
+
+  // Bottom hint
+  &__bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    padding: 2.4rem 1.6rem;
+    padding-bottom: calc(2.4rem + env(safe-area-inset-bottom));
+    background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__hint {
+    font-size: 1.4rem;
+    color: rgba(255, 255, 255, 0.85);
+    font-family: Rubik, sans-serif;
+    text-align: center;
+    margin: 0;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  }
+}
+
+@keyframes bs-scan {
+  0%, 100% { top: 8%; }
+  50%       { top: 82%; }
+}
+
+@keyframes barcode-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(1.4); }
+}
