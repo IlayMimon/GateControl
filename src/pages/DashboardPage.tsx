@@ -37,17 +37,15 @@ function DashboardPage() {
   const [activeLocation, setActiveLocation] = useState<string | null>(null);
   const [activeBranch, setActiveBranch] = useState<string | null>(null);
 
-  // Only count people assigned to a branch and not "חוץ פיקוד"
+  // Only count people assigned to a branch and at one of the known locations
+  const LOCATION_KEYS = useMemo(() => new Set(LOCATIONS.map((l) => l.key)), []);
+
   const assignedPeople = useMemo(
     () =>
       peopleData.filter(
-        (p) =>
-          p.Branch?.Title &&
-          p.Location &&
-          p.Location !== 'חוץ פיקוד' &&
-          p.Location !== 'לא נמצא',
+        (p) => p.Branch?.Title && LOCATION_KEYS.has(p.Location),
       ),
-    [peopleData],
+    [peopleData, LOCATION_KEYS],
   );
 
   const locationCounts = useMemo(
@@ -136,6 +134,24 @@ function DashboardPage() {
               נקה סינון
             </button>
           )}
+          <button
+            className="dashboard-page__history-btn"
+            onClick={() => navigate('/history')}
+          >
+            <svg
+              width="15"
+              height="15"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+            </svg>
+            <span>היסטוריה</span>
+          </button>
           <button
             className="dashboard-page__names-btn"
             onClick={goToPeopleList}

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import HomePage from "./pages/HomePage";
 import DashboardPage from "./pages/DashboardPage";
 import PeopleListPage from "./pages/PeopleListPage";
+import HistoryPage from "./pages/HistoryPage";
 import SplashScreen from "./components/SplashScreen";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/people" element={<PeopleListPage />} />
+        <Route path="/history" element={<HistoryPage />} />
         <Route path="*" element={<div>404</div>} />
       </Routes>
     </HashRouter>
