@@ -4,6 +4,8 @@ import HomePageBody from '../components/HomePageBody';
 import { ToastContainer } from 'react-toastify';
 import LocationSelector from '../components/LocationSelector';
 import BiLogo from '../assets/pictures/bi-logo.png';
+import MashaanLogo from '../assets/pictures/mashaan-logo.png';
+import TiksuvPdmLogo from '../assets/pictures/tikshuv-pdm-logo.png';
 
 function HomePage() {
   const [searchParams] = useSearchParams();
@@ -23,6 +25,10 @@ function HomePage() {
         pauseOnHover={false}
         theme="light"
       />
+      <div className="home-page__header-logos">
+        <img src={MashaanLogo} alt="לוגו מש״אן" className="home-page__header-logo" />
+        <img src={TiksuvPdmLogo} alt="לוגו תקשוב פד״ם" className="home-page__header-logo" />
+      </div>
       <div className="home-page__header">
         <h1>מעקב גישה למתקן {location && ` - ${location}`}</h1>
         <h2>{dayjs(new Date()).format('DD/MM/YYYY')}</h2>
