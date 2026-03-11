@@ -11,10 +11,10 @@ import { updateBranchByArmyIds } from '../functions/updateBranchByArmyIds';
 
 // ── הגדרת העדכון: מספרים אישיים ו-Branch ID יעד ─────────────────────────────
 const ARMY_IDS_TO_UPDATE = [
-  '9406470',
-  '9250152',
+  '8894351',
+  // '9250152',
 ];
-const TARGET_BRANCH_ID = 5;
+const TARGET_BRANCH_ID = 1;
 // ─────────────────────────────────────────────────────────────────────────────
 
 function HomePage() {
@@ -25,7 +25,10 @@ function HomePage() {
   const handleUpdateBranch = async () => {
     setUpdating(true);
     try {
-      const { success, failed } = await updateBranchByArmyIds(ARMY_IDS_TO_UPDATE, TARGET_BRANCH_ID);
+      const { success, failed } = await updateBranchByArmyIds(
+        ARMY_IDS_TO_UPDATE,
+        TARGET_BRANCH_ID,
+      );
       if (failed === 0) {
         toast.success(`עודכנו ${success} רשומות בהצלחה`);
       } else {
@@ -53,8 +56,16 @@ function HomePage() {
         theme="light"
       />
       <div className="home-page__header-logos">
-        <img src={MashaanLogo} alt="לוגו מש״אן" className="home-page__header-logo" />
-        <img src={TiksuvPdmLogo} alt="לוגו תקשוב פד״ם" className="home-page__header-logo" />
+        <img
+          src={MashaanLogo}
+          alt="לוגו מש״אן"
+          className="home-page__header-logo"
+        />
+        <img
+          src={TiksuvPdmLogo}
+          alt="לוגו תקשוב פד״ם"
+          className="home-page__header-logo"
+        />
       </div>
       <div className="home-page__header">
         <h1>מעקב גישה למתקן {location && ` - ${location}`}</h1>
