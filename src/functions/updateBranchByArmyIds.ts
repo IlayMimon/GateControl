@@ -10,7 +10,7 @@ import { patchItemInList } from './postToSharepoint';
 export const updateBranchByArmyIds = async (
   armyIds: string[],
   newBranchId: number
-): Promise<{ success: number; failed: number }> => {
+): Promise<{ success: number; failed: number; failedIds: string[] }> => {
   // Build OData filter: ArmyId eq '...' or ArmyId eq '...'
   const filter = armyIds.map(id => `ArmyId eq '${id}'`).join(' or ');
   const url = `/_api/web/lists/getbytitle('People')/items?$select=ID,ArmyId&$filter=${encodeURIComponent(filter)}&$top=5000`;
@@ -22,18 +22,23 @@ export const updateBranchByArmyIds = async (
   const items = data.d.results;
   let success = 0;
   let failed = 0;
+  const failedIds: string[] = [];
 
   await Promise.all(
     items.map(async (item) => {
       try {
         const res = await patchItemInList('People', { BranchId: newBranchId }, item.ID, '*');
         if (res.status === 204) success++;
-        else failed++;
+        else {
+          failed++;
+          failedIds.push(item.ArmyId);
+        }
       } catch {
         failed++;
+        failedIds.push(item.ArmyId);
       }
     })
   );
 
-  return { success, failed };
+  return { success, failed, failedIds };
 };

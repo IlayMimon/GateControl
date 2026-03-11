@@ -467,6 +467,7 @@ function HomePage() {
   const handleUpdateBranch = async () => {
     setUpdating(true);
     const CHUNK_SIZE = 10;
+    const START_CHUNK_INDEX = 18; // מתחיל ממערך 19 (אינדקס 18)
     const chunks: string[][] = [];
     for (let i = 0; i < ARMY_IDS_TO_UPDATE.length; i += CHUNK_SIZE) {
       chunks.push(ARMY_IDS_TO_UPDATE.slice(i, i + CHUNK_SIZE));
@@ -474,17 +475,24 @@ function HomePage() {
 
     let totalSuccess = 0;
     let totalFailed = 0;
+    const allFailedIds: string[] = [];
 
     try {
-      for (let i = 0; i < chunks.length; i++) {
+      for (let i = START_CHUNK_INDEX; i < chunks.length; i++) {
         console.log(`[updateBranch] מתחיל מערך ${i + 1}/${chunks.length}:`, chunks[i]);
-        const { success, failed } = await updateBranchByArmyIds(chunks[i], TARGET_BRANCH_ID);
+        const { success, failed, failedIds } = await updateBranchByArmyIds(chunks[i], TARGET_BRANCH_ID);
         totalSuccess += success;
         totalFailed += failed;
+        allFailedIds.push(...failedIds);
         console.log(`[updateBranch] מערך ${i + 1}/${chunks.length} הסתיים ✓ | הצליחו: ${success}, נכשלו: ${failed}`);
         if (i < chunks.length - 1) {
           await new Promise((resolve) => setTimeout(resolve, 500));
         }
+      }
+
+      if (allFailedIds.length > 0) {
+        console.warn('[updateBranch] מספרים אישיים שנכשלו:', allFailedIds);
+        console.warn('[updateBranch] כמערך להעתקה:', JSON.stringify(allFailedIds));
       }
 
       if (totalFailed === 0) {
@@ -494,6 +502,9 @@ function HomePage() {
       }
     } catch (err) {
       console.error('[updateBranch] שגיאה:', err);
+      if (allFailedIds.length > 0) {
+        console.warn('[updateBranch] מספרים שנכשלו עד כה:', JSON.stringify(allFailedIds));
+      }
       toast.error('שגיאה בעדכון המספרים האישיים');
     } finally {
       setUpdating(false);
