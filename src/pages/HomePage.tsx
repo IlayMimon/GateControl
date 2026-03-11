@@ -1,15 +1,42 @@
 import dayjs from 'dayjs';
+import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import HomePageBody from '../components/HomePageBody';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import LocationSelector from '../components/LocationSelector';
 import BiLogo from '../assets/pictures/bi-logo.png';
 import MashaanLogo from '../assets/pictures/mashaan-logo.png';
 import TiksuvPdmLogo from '../assets/pictures/tikshuv-pdm-logo.png';
+import { updateBranchByArmyIds } from '../functions/updateBranchByArmyIds';
+
+// ── הגדרת העדכון: מספרים אישיים ו-Branch ID יעד ─────────────────────────────
+const ARMY_IDS_TO_UPDATE = [
+  '9406470',
+  '9250152',
+];
+const TARGET_BRANCH_ID = 5;
+// ─────────────────────────────────────────────────────────────────────────────
 
 function HomePage() {
   const [searchParams] = useSearchParams();
   const location = searchParams.get('location');
+  const [updating, setUpdating] = useState(false);
+
+  const handleUpdateBranch = async () => {
+    setUpdating(true);
+    try {
+      const { success, failed } = await updateBranchByArmyIds(ARMY_IDS_TO_UPDATE, TARGET_BRANCH_ID);
+      if (failed === 0) {
+        toast.success(`עודכנו ${success} רשומות בהצלחה`);
+      } else {
+        toast.warning(`עודכנו ${success} רשומות, נכשלו ${failed}`);
+      }
+    } catch {
+      toast.error('שגיאה בעדכון המספרים האישיים');
+    } finally {
+      setUpdating(false);
+    }
+  };
 
   return (
     <div className="home-page">
@@ -40,27 +67,13 @@ function HomePage() {
         ) : (
           <div className="home-page__location-wrap">
             <LocationSelector titles={['פד"ם', 'מצודת האבות', 'באזל']} />
-            {/* <button
-              className="home-page__dashboard-btn"
-              onClick={() => navigate("/dashboard")}
+            <button
+              className="home-page__update-branch-btn"
+              onClick={handleUpdateBranch}
+              disabled={updating}
             >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <rect x="3" y="3" width="7" height="7" rx="1" />
-                <rect x="14" y="3" width="7" height="7" rx="1" />
-                <rect x="3" y="14" width="7" height="7" rx="1" />
-                <rect x="14" y="14" width="7" height="7" rx="1" />
-              </svg>
-              <span>דאשבורד</span>
-            </button> */}
+              {updating ? 'מעדכן...' : 'עדכון מספרים אישיים'}
+            </button>
           </div>
         )}
       </div>
