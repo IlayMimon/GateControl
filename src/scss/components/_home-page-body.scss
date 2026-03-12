@@ -44,12 +44,12 @@
 }
 
 // Phone — revert to natural flow
-@media (max-width: 480px) {
+@media (max-width: 599px) {
   .home-page-body {
     flex: none;
     min-height: unset;
-    overflow: visible;
-    gap: 2rem;
+    overflow-y: auto;
+    gap: 1rem;
 
     &__back-btn {
       top: 1.2rem;
@@ -57,5 +57,12 @@
       font-size: 1.6rem;
       padding: 0.6rem 1.5rem;
     }
+  }
+}
+
+// Tablet (600–1050px) — already stacked, keep scroll
+@media (min-width: 600px) and (max-width: 1050px) {
+  .home-page-body {
+    overflow-y: auto;
   }
 }

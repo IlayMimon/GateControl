@@ -17,19 +17,20 @@
   }
 }
 
-// Landscape tablet — restore side-by-side so each box gets enough height
-@media (max-width: 1050px) and (max-height: 700px) {
+// Landscape tablet (not phone) — restore side-by-side so each box gets enough height
+@media (max-width: 1050px) and (max-height: 700px) and (min-width: 600px) {
   .main-content {
     flex-direction: row;
     gap: 1rem;
   }
 }
 
-// Phone — revert to natural flow
-@media (max-width: 480px) {
+// Phone — single column, page scroll
+@media (max-width: 599px) {
   .main-content {
+    flex-direction: column;
     flex: none;
-    align-items: center;
-    gap: 2rem;
+    align-items: stretch;
+    gap: 1.5rem;
   }
 }

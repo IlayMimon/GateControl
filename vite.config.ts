@@ -1,7 +1,6 @@
 import { defineConfig, Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
-import basicSsl from '@vitejs/plugin-basic-ssl';
 import { readFileSync } from 'fs';
 
 const { version } = JSON.parse(readFileSync('./package.json', 'utf-8')) as {
@@ -90,7 +89,6 @@ function generateSharePointAspx(): Plugin {
 export default defineConfig({
   plugins: [
     react(),
-    basicSsl(),
     generateSharePointAspx(),
     VitePWA({
       registerType: 'autoUpdate',
@@ -146,7 +144,6 @@ export default defineConfig({
     },
   },
   server: {
-    https: {},
     host: true,
     proxy: {
       '/_api': 'http://localhost:3000/sites/PDM_Entry',
