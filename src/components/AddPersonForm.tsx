@@ -19,7 +19,7 @@ export function AddPersonForm({ branches, onCancel, initialArmyId }: IAddPersonF
 
   return isLoading ? (
     <DotLottieReact
-      src="https://lottie.host/8026cb7a-061a-44af-948e-22d13b9e55a7/TXtEMrjcEY.lottie"
+      src="/loading.lottie"
       loop
       autoplay
     />

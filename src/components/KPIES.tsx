@@ -14,7 +14,7 @@ function KPIES() {
   }
 
   const { data: actionsData } = useGetActions(true);
-  console.log(actionsData);
+  // console.log(actionsData);
   const { peopleData } = useGateControlContext();
 
   return location ? (
@@ -31,7 +31,7 @@ function KPIES() {
         title={'פעילות היום'}
         value={
           actionsData?.filter((action) => {
-            console.log(action.Location, Location);
+            // console.log(action.Location, Location);
             return action.Location === location;
           })?.length || 0
         }

@@ -40,7 +40,7 @@
 
     &__title {
       display: flex;
-      gap: 0.5rem;
+      gap: 0.75rem;
       flex-wrap: wrap;
 
       &__name {
@@ -55,6 +55,30 @@
         color: var(--text-secondary);
         font-weight: 300;
       }
+    }
+  }
+
+  &__location-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: rgba(100, 130, 180, 0.12);
+    border: 1px solid rgba(100, 130, 180, 0.35);
+    border-radius: 999px;
+    padding: 0.1rem 0.7rem 0.1rem 0.5rem;
+    font-size: 1.4rem;
+    color: rgba(80, 110, 160, 0.9);
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+
+    &__icon {
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    &__name {
+      font-weight: 400;
     }
   }
 

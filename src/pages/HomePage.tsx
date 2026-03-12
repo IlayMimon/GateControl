@@ -26,8 +26,17 @@ function HomePage() {
         theme="light"
       />
       <div className="home-page__header-logos">
-        <img src={MashaanLogo} alt="לוגו מש״אן" className="home-page__header-logo" />
-        <img src={TiksuvPdmLogo} alt="לוגו תקשוב פד״ם" className="home-page__header-logo" />
+        <img
+          src={TiksuvPdmLogo}
+          alt="לוגו תקשוב פד״ם"
+          className="home-page__header-logo"
+        />
+
+        <img
+          src={MashaanLogo}
+          alt="לוגו מש״אן"
+          className="home-page__header-logo"
+        />
       </div>
       <div className="home-page__header">
         <h1>מעקב גישה למתקן {location && ` - ${location}`}</h1>

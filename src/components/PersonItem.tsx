@@ -5,7 +5,7 @@ import { toast, ToastOptions } from 'react-toastify';
 import preformAction from '../functions/preformAction';
 import { patchItemInList } from '../functions/postToSharepoint';
 import { Person } from '../hooks/data/useGetPeople';
-import { IoPersonAdd, IoPersonRemove } from 'react-icons/io5';
+import { IoPersonAdd, IoPersonRemove, IoLocationSharp } from 'react-icons/io5';
 import { useGateControlContext } from '../context/GateControlContext';
 
 interface IPersonItemProps {
@@ -247,6 +247,13 @@ function PersonItem({ person, mode, onActionComplete }: IPersonItemProps) {
               onClick={handleArmyIdClick}
             >
               {isEditing ? editArmyId : person.ArmyId}
+            </span>
+          )}
+
+          {!isEditing && mode === 'action' && person.Location && person.Location !== 'לא נמצא' && (
+            <span className="person-item__location-tag">
+              <span className="person-item__location-tag__name">{person.Location}</span>
+              <IoLocationSharp className="person-item__location-tag__icon" />
             </span>
           )}
         </div>

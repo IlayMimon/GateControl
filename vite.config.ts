@@ -77,7 +77,11 @@ function generateSharePointAspx(): Plugin {
         fileName: `${buildAssetsPath}/app-logo.png`,
         source: readFileSync('./public/app-logo.png'),
       });
-      this.emitFile({ type: 'asset', fileName: 'index.aspx', source: aspxContent });
+      this.emitFile({
+        type: 'asset',
+        fileName: 'index.aspx',
+        source: aspxContent,
+      });
     },
   };
 }
@@ -120,8 +124,18 @@ export default defineConfig({
         lang: 'he',
         dir: 'rtl',
         icons: [
-          { src: '/app-logo.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
-          { src: '/app-logo.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+          {
+            src: '/app-logo.png',
+            sizes: '192x192',
+            type: 'image/png',
+            purpose: 'any',
+          },
+          {
+            src: '/app-logo.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'maskable',
+          },
         ],
       },
     }),

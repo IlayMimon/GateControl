@@ -17,7 +17,7 @@ function HomePageBody() {
   return (
     <div className="home-page-body">
       <KPIES />
-      <BarcodeScanner onScan={setSearchValue} />
+      {<BarcodeScanner onScan={setSearchValue} />}
       <MainContent searchValue={searchValue} onSearchChange={setSearchValue} />
 
       <Button
