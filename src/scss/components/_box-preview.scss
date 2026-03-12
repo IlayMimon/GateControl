@@ -49,13 +49,12 @@
   }
 }
 
-// Phone — natural height, page scroll allowed
+// Phone — fixed viewport height, internal scroll
 @media (max-width: 599px) {
   .box-preview {
     flex: none;
     width: 100%;
-    min-height: 40rem;
-    height: 45rem;
+    height: calc(100dvh - 20rem);
     padding: 1.5rem 1rem;
 
     &__title {
