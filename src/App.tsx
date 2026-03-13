@@ -1,10 +1,10 @@
-import { HashRouter, Route, Routes } from "react-router-dom";
-import { useEffect, useState } from "react";
-import HomePage from "./pages/HomePage";
-import DashboardPage from "./pages/DashboardPage";
-import PeopleListPage from "./pages/PeopleListPage";
-import HistoryPage from "./pages/HistoryPage";
-import SplashScreen from "./components/SplashScreen";
+import { HashRouter, Route, Routes } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import HomePage from './pages/HomePage';
+import DashboardPage from './pages/DashboardPage';
+import PeopleListPage from './pages/PeopleListPage';
+import HistoryPage from './pages/HistoryPage';
+import SplashScreen from './components/SplashScreen';
 
 function App() {
   const [splashDone, setSplashDone] = useState(false);

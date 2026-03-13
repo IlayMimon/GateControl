@@ -12,6 +12,7 @@ interface IPersonItemProps {
   person: Person;
   mode: 'action' | 'status';
   onActionComplete?: () => void;
+  searchValue?: string;
 }
 
 export const toastConfig: ToastOptions = {
@@ -26,7 +27,7 @@ export const toastConfig: ToastOptions = {
   className: 'toast-notification',
 };
 
-function PersonItem({ person, mode, onActionComplete }: IPersonItemProps) {
+function PersonItem({ person, mode, onActionComplete, searchValue }: IPersonItemProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editBranch, setEditBranch] = useState<string | undefined>(
@@ -209,6 +210,11 @@ function PersonItem({ person, mode, onActionComplete }: IPersonItemProps) {
         className={`person-item__right${isEditing ? ' person-item__right--editing' : ''}`}
         onClick={() => !isEditing && enterEditMode()}
       >
+        {mode === 'action' && person.Location !== 'לא נמצא' && person.Location !== location && (searchValue?.length ?? 0) >= 4 && (
+          <span className="person-item__location-tag">
+            לא דווח יציאה מ{person.Location}
+          </span>
+        )}
         <div className="person-item__right__title">
           {editingField === 'name' ? (
             <input
@@ -320,7 +326,7 @@ function PersonItem({ person, mode, onActionComplete }: IPersonItemProps) {
           <Button
             className="person-item__left__enter-button"
             onClick={() => handleClick('inbound')}
-            disabled={isLoading || person?.Location !== 'לא נמצא'}
+            disabled={isLoading || person?.Location === location}
           >
             <IoPersonAdd style={{ marginLeft: '2px' }} />
             כניסה
@@ -328,7 +334,7 @@ function PersonItem({ person, mode, onActionComplete }: IPersonItemProps) {
           <Button
             className="person-item__left__exit-button"
             onClick={() => handleClick('outbound')}
-            disabled={isLoading || person?.Location === 'לא נמצא'}
+            disabled={isLoading || person?.Location !== location}
           >
             <IoPersonRemove style={{ marginLeft: '2px' }} />
             יציאה
