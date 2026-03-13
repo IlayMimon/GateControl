@@ -120,6 +120,7 @@ function GateControl({ mode, searchValue, onSearchChange }: IGateControlProps) {
                 person={person}
                 mode={mode}
                 onActionComplete={handleActionComplete}
+                searchValue={searchValue}
               />
             ))
         ) : (
