@@ -5,7 +5,7 @@ import { toast, ToastOptions } from 'react-toastify';
 import preformAction from '../functions/preformAction';
 import { patchItemInList } from '../functions/postToSharepoint';
 import { Person } from '../hooks/data/useGetPeople';
-import { IoPersonAdd, IoPersonRemove, IoLocationSharp } from 'react-icons/io5';
+import { IoPersonAdd, IoPersonRemove } from 'react-icons/io5';
 import { useGateControlContext } from '../context/GateControlContext';
 
 interface IPersonItemProps {
@@ -212,7 +212,7 @@ function PersonItem({ person, mode, onActionComplete, searchValue }: IPersonItem
       >
         {mode === 'action' && person.Location !== 'לא נמצא' && person.Location !== location && (searchValue?.length ?? 0) >= 4 && (
           <span className="person-item__location-tag">
-            לא דווח יציאה מ{person.Location}
+            לא דווח יציאה מ{person.Location === 'גני יעלים' ? 'מצודת האבות' : person.Location}
           </span>
         )}
         <div className="person-item__right__title">
@@ -256,12 +256,12 @@ function PersonItem({ person, mode, onActionComplete, searchValue }: IPersonItem
             </span>
           )}
 
-          {!isEditing && mode === 'action' && person.Location && person.Location !== 'לא נמצא' && (
+          {/* {!isEditing && mode === 'action' && person.Location && person.Location !== 'לא נמצא' && (
             <span className="person-item__location-tag">
               <span className="person-item__location-tag__name">{person.Location}</span>
               <IoLocationSharp className="person-item__location-tag__icon" />
             </span>
-          )}
+          )} */}
         </div>
 
         {isEditing ? (
