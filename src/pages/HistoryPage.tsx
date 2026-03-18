@@ -26,7 +26,7 @@ const LOCATION_KEYS = new Set(LOCATIONS.map((l) => l.key));
 const ALL_ACTIONS_URL =
   `/_api/web/lists/getbytitle('Actions')/items` +
   `?$select=ID,Created,ArmyId/ArmyId,ActionType,Location` +
-  `&$expand=ArmyId&$orderby=Created asc&$top=4999`;
+  `&$expand=ArmyId&$orderby=Created asc&$top=500`;
 
 /**
  * Computes hourly occupancy anchored to the live People-list count.

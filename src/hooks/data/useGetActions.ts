@@ -21,7 +21,7 @@ const useGetActions = (todayOnly = false) => {
   const firstPageUrl =
     "/_api/web/lists/getbytitle('Actions')/items?$select=ID,Created,ArmyId/ArmyId,ActionType,Location&$expand=ArmyId" +
     todayFilter +
-    '&$top=4999';
+    '&$top=500';
 
   const { data, isLoading, refetch } = useQuery<Action[]>({
     queryKey: [firstPageUrl],

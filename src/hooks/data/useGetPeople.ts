@@ -1,5 +1,5 @@
-import { SharepointQueryResultArray } from "../../types/spFetchTypes";
-import { useQueryFetchRequest } from "../useQueryFetch";
+import { useQuery } from "@tanstack/react-query";
+import fetchAllSharePointPages from "../../functions/fetchAllSharePointPages";
 
 export type Person = {
   ID: number;
@@ -10,14 +10,18 @@ export type Person = {
   Location: string;
 };
 
-const useGetPeople = () => {
-  const { data, isLoading, refetch } = useQueryFetchRequest<
-    SharepointQueryResultArray<Person>
-  >(
-    "/_api/web/lists/getbytitle('People')/items?$top=5000&$select=ID,ArmyId,Title,LastName,Branch/Id,Branch/Title,Location&$expand=Branch"
-  );
+const PEOPLE_URL =
+  "/_api/web/lists/getbytitle('People')/items" +
+  "?$select=ID,ArmyId,Title,LastName,Branch/Id,Branch/Title,Location" +
+  "&$expand=Branch&$top=500";
 
-  return { data: data?.d.results, isLoading, refetch };
+const useGetPeople = () => {
+  const { data, isLoading, refetch } = useQuery<Person[]>({
+    queryKey: [PEOPLE_URL],
+    queryFn: () => fetchAllSharePointPages<Person>(PEOPLE_URL),
+  });
+
+  return { data, isLoading, refetch };
 };
 
 export default useGetPeople;

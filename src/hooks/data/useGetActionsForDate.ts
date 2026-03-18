@@ -12,7 +12,7 @@ const useGetActionsForDate = (date: Dayjs) => {
     `?$select=ID,Created,ArmyId/ArmyId,ActionType,Location` +
     `&$expand=ArmyId` +
     `&$filter=Created ge '${start}' and Created lt '${end}'` +
-    `&$orderby=Created asc&$top=4999`;
+    `&$orderby=Created asc&$top=500`;
 
   const { data, isLoading } = useQuery<Action[]>({
     queryKey: ['actions-date', date.format('YYYY-MM-DD')],
