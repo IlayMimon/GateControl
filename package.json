@@ -1,7 +1,7 @@
 {
   "name": "pdm-entry",
   "private": true,
-  "version": "8",
+  "version": "9",
   "type": "module",
   "homepage": "/sites/PDM_Entry",
   "scripts": {
